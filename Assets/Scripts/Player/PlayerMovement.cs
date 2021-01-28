@@ -46,8 +46,8 @@ public class PlayerMovement : NetworkBehaviour
             float dampingX = GetDamping(movementInput.x, xvelocity);
             float dampingZ = GetDamping(movementInput.y, zvelocity);
 
-            xvelocity *= Mathf.Pow(1f - dampingX, Time.deltaTime * 10f);
-            zvelocity *= Mathf.Pow(1f - dampingZ, Time.deltaTime * 10f);
+            xvelocity *= Mathf.Pow(1f - dampingX, Time.fixedDeltaTime * 10f);
+            zvelocity *= Mathf.Pow(1f - dampingZ, Time.fixedDeltaTime * 10f);
 
             rb.velocity = new Vector3(xvelocity, rb.velocity.y, zvelocity);
 

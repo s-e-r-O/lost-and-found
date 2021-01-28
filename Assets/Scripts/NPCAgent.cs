@@ -41,6 +41,7 @@ public class NPCAgent : NetworkBehaviour
     while(true)
         {
             yield return new WaitForSeconds(1);
+            
             if (targets.Count > 1)
             {
                 var minTarget = targets[0];
