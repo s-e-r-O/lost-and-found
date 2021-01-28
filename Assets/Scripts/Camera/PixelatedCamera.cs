@@ -29,6 +29,8 @@ public class PixelatedCamera : MonoBehaviour
 
     [Header("Display")]
     public RawImage display;
+    //[Header("Display")]
+    //public MeshRenderer quad;
 
     private void Awake()
     {
@@ -77,6 +79,8 @@ public class PixelatedCamera : MonoBehaviour
 
         // Attaching texture to the display UI RawImage
         display.texture = renderTexture;
+
+        //quad.material.mainTexture = renderTexture;
     }
 
     public bool CheckScreenResize()

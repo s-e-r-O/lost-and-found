@@ -6,11 +6,14 @@ using UnityEngine.AI;
 
 public class NPCAgent : NetworkBehaviour
 {
+    [SerializeField]
+    float walkRadius = 10f;
+
     NavMeshAgent agent;
     List<Transform> targets;
     Transform currentTarget;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         targets = new List<Transform>();
@@ -19,7 +22,8 @@ public class NPCAgent : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        StartCoroutine(GetClosestTarget());
+        StartCoroutine(RoamAround());
+        //StartCoroutine(GetClosestTarget());
     }
 
     // Update is called once per frame
@@ -34,7 +38,12 @@ public class NPCAgent : NetworkBehaviour
     [ServerCallback]
     public void SetTarget(Transform target)
     {
-        targets.Add(target);
+        //targets.Add(target);
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, walkRadius);
     }
 
     IEnumerator GetClosestTarget() { 
@@ -80,5 +89,26 @@ public class NPCAgent : NetworkBehaviour
                 currentTarget = targets[0];
             }
         }
+    }
+
+    [ServerCallback]
+    IEnumerator RoamAround()
+    {
+        while(true)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
+            randomDirection += transform.position;
+            NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, walkRadius, 1);
+            Vector3 finalPosition = hit.position;
+            Debug.Log($"Moving to {finalPosition}");
+            agent.SetDestination(finalPosition);
+            yield return new WaitForSeconds(Random.Range(3f, 10f));
+        }
+    }
+
+    [ClientRpc]
+    void SetDestination(Vector3 position)
+    {
+        agent.SetDestination(position);
     }
 }
