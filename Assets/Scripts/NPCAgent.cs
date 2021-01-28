@@ -100,7 +100,6 @@ public class NPCAgent : NetworkBehaviour
             randomDirection += transform.position;
             NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, walkRadius, 1);
             Vector3 finalPosition = hit.position;
-            Debug.Log($"Moving to {finalPosition}");
             agent.SetDestination(finalPosition);
             yield return new WaitForSeconds(Random.Range(3f, 10f));
         }

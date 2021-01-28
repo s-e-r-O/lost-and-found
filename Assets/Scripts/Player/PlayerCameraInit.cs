@@ -7,8 +7,9 @@ using Cinemachine;
 public class PlayerCameraInit : NetworkBehaviour
 {
     public CinemachineVirtualCamera playerCameraPrefab;
-    private void Start()
+    public override void OnStartAuthority()
     {
+        base.OnStartAuthority();
         if (isLocalPlayer)
         {
             var playerCamera = Instantiate(playerCameraPrefab);
