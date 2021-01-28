@@ -1,23 +1,100 @@
 ﻿using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField]
-    private float speed = 5f;
-    void HandleMovement()
+    [Range(0.0f, 1.0f)]
+    float walkDampingBasic = 0.4f;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float walkDampingWhenStopping = 0.8f;
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    float walkDampingWhenTurning = 0.5f;
+    
+    public Animator anim;
+
+    private Rigidbody rb;
+    private Vector2 movementInput;
+    private Camera mainCamera;
+
+    // Gizmos values
+    private Vector3 gizmos_targetPosition;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        mainCamera = Camera.main;
+    }
+
+    void FixedUpdate()
+    {
+        Walk();
+    }
+
+    private void Walk()
     {
         if (isLocalPlayer)
         {
-            Vector2 dir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            transform.position = transform.position + new Vector3(dir.x, dir.y, 0) * speed * Time.deltaTime;
+            OnMove();
+            float xvelocity = rb.velocity.x;
+            float zvelocity = rb.velocity.z;
+
+            xvelocity += movementInput.x;
+            zvelocity += movementInput.y;
+
+            float dampingX = GetDamping(movementInput.x, xvelocity);
+            float dampingZ = GetDamping(movementInput.y, zvelocity);
+
+            xvelocity *= Mathf.Pow(1f - dampingX, Time.deltaTime * 10f);
+            zvelocity *= Mathf.Pow(1f - dampingZ, Time.deltaTime * 10f);
+
+            rb.velocity = new Vector3(xvelocity, rb.velocity.y, zvelocity);
+
+            gizmos_targetPosition = transform.position + new Vector3(xvelocity, transform.position.y, zvelocity);
+            // SetAnimationWalkingValues(xvelocity, zvelocity);
         }
     }
 
-    void Update()
+
+    public void OnMove()
     {
-        HandleMovement();
+        var input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        movementInput = input.ApplyCameraPerspective(mainCamera);
+    }
+
+    private float GetDamping(float inputValue, float currentVelocity)
+    {
+        if (Mathf.Abs(inputValue) < 0.1f)
+        {
+            return walkDampingWhenStopping;
+        }
+        else if (Mathf.Sign(currentVelocity) != Mathf.Sign(inputValue))
+        {
+            return walkDampingWhenTurning;
+        }
+        return walkDampingBasic;
+    }
+    private void SetAnimationWalkingValues(float x, float y)
+    {
+        var speed = new Vector2(x, y);
+        anim.SetFloat("WalkSpeed", speed.magnitude);
+        if (speed.magnitude >= 0.1f)
+        {
+            var values = speed.normalized.RotatePerspective(transform);
+            anim.SetFloat("XSpeed", values.x);
+            anim.SetFloat("YSpeed", values.y);
+        }
+    }
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, gizmos_targetPosition);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward);
+        Gizmos.DrawLine(transform.position, transform.position + transform.right);
+
     }
 }
