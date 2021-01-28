@@ -45,7 +45,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410598822694841937}
   serializedVersion: 2
-  m_Mass: 80
+  m_Mass: 8
   m_Drag: 1
   m_AngularDrag: 10
   m_UseGravity: 1
@@ -67,9 +67,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  acceleration: 1200
-  maxSpeed: 2000
-  steering: 1000
+  acceleration: 120
+  maxSpeed: 200
+  steering: 100
   wheels: []
 --- !u!114 &6383243516083944606
 MonoBehaviour:
@@ -369,7 +369,7 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -481,7 +481,7 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -593,7 +593,7 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -705,7 +705,7 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 0.1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
