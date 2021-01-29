@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8501886487586129685}
   - component: {fileID: 8501886487586129684}
   - component: {fileID: 774597140}
+  - component: {fileID: 6727539622754211769}
   m_Layer: 0
   m_Name: Canvas Camera
   m_TagString: Untagged
@@ -128,6 +129,37 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!114 &6727539622754211769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8501886487586129686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &8501886487761311909
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8501886488666283951}
   m_LocalRotation: {x: 0.09904577, y: -0.89239913, z: 0.23911765, w: 0.3696438}
-  m_LocalPosition: {x: 4.072034, y: 7.1070824, z: 11.8718}
+  m_LocalPosition: {x: 31.78, y: 7.1070824, z: 11.8718}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404303968457484849}
@@ -391,8 +423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   targetScreenSize:
-    width: 320
-    height: 180
+    width: 480
+    height: 270
   screenScaleFactor: 1
   display: {fileID: 8501886488655985874}
 --- !u!81 &8501886488666283948

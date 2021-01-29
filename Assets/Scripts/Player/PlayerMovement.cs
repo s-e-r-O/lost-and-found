@@ -32,6 +32,7 @@ public class PlayerMovement : NetworkBehaviour
     void FixedUpdate()
     {
         Walk();
+        SetAnimationWalkingValues();
     }
 
     private void Walk()
@@ -59,7 +60,6 @@ public class PlayerMovement : NetworkBehaviour
             }
 
             gizmos_targetPosition = transform.position + new Vector3(xvelocity, transform.position.y, zvelocity);
-            // SetAnimationWalkingValues(xvelocity, zvelocity);
         }
     }
 
@@ -82,16 +82,16 @@ public class PlayerMovement : NetworkBehaviour
         }
         return walkDampingBasic;
     }
-    private void SetAnimationWalkingValues(float x, float y)
+    void SetAnimationWalkingValues()
     {
-        var speed = new Vector2(x, y);
+        var speed = new Vector2(rb.velocity.x, rb.velocity.z);
         anim.SetFloat("WalkSpeed", speed.magnitude);
-        if (speed.magnitude >= 0.1f)
-        {
-            var values = speed.normalized.RotatePerspective(transform);
-            anim.SetFloat("XSpeed", values.x);
-            anim.SetFloat("YSpeed", values.y);
-        }
+        //if (speed.magnitude >= 0.1f)
+        //{
+        //    var values = speed.normalized.RotatePerspective(transform);
+        //    anim.SetFloat("XSpeed", values.x);
+        //    anim.SetFloat("YSpeed", values.y);
+        //}
     }
 
 
