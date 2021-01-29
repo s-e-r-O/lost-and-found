@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.unity.2d.pixel-perfect": {
+      "version": "3.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.cinemachine": {
       "version": "2.6.3",
       "depth": 0,
