@@ -12,6 +12,12 @@ public class NPCAgent : NetworkBehaviour
     NavMeshAgent agent;
     List<Transform> targets;
     Transform currentTarget;
+    
+    [SerializeField]
+    Animator anim;
+
+    [SyncVar]
+    float remainingDistance;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,10 +35,15 @@ public class NPCAgent : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentTarget != null)
+        if (isServer)
         {
-            agent.SetDestination(currentTarget.position);
+            remainingDistance = agent.remainingDistance;
         }
+        anim.SetFloat("remainingDistance",remainingDistance);
+        //if (currentTarget != null)
+        //{
+        //    agent.SetDestination(currentTarget.position);
+        //}
     }
 
     [ServerCallback]
@@ -42,8 +53,8 @@ public class NPCAgent : NetworkBehaviour
     }
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, walkRadius);
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireSphere(transform.position, walkRadius);
     }
 
     IEnumerator GetClosestTarget() { 
