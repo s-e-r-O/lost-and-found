@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField]
+    float rotationSpeed =3f;
+    [SerializeField]
     [Range(0.0f, 1.0f)]
     float walkDampingBasic = 0.4f;
     [SerializeField]
@@ -50,6 +52,11 @@ public class PlayerMovement : NetworkBehaviour
             zvelocity *= Mathf.Pow(1f - dampingZ, Time.fixedDeltaTime * 10f);
 
             rb.velocity = new Vector3(xvelocity, rb.velocity.y, zvelocity);
+
+            if (new Vector2(xvelocity, zvelocity).magnitude > 1f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(xvelocity, 0f, zvelocity)), Time.fixedDeltaTime * rotationSpeed);
+            }
 
             gizmos_targetPosition = transform.position + new Vector3(xvelocity, transform.position.y, zvelocity);
             // SetAnimationWalkingValues(xvelocity, zvelocity);

@@ -10,8 +10,17 @@ public class NetworkManagerGame : NetworkManager
     public GameObject car;
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        GameObject player = Instantiate(numPlayers == 0 ? finder : car);
-        NetworkServer.AddPlayerForConnection(conn, player);
+        bool isFinder = numPlayers == 0;
+        if (isFinder)
+        {
+            GameObject player = Instantiate(finder);
+            NetworkServer.AddPlayerForConnection(conn, player);
+        } else
+        {
+            var transformPosition = GetStartPosition();
+            GameObject player = Instantiate(car, transformPosition.position, Quaternion.identity);
+            NetworkServer.AddPlayerForConnection(conn, player);
+        }
     }
 
     public override void OnServerDisconnect(NetworkConnection conn)
