@@ -21,20 +21,21 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: -6465566751694194690, guid: e5dc31758db11e4458797c5ae084bf22, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _SPECULAR_SETUP
+  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: ac9d629e076998047bb179e4626e19e8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 9}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -54,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ac9d629e076998047bb179e4626e19e8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 9}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -90,6 +91,7 @@ Material:
     - _Opacity: 0.7
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _Shininess: 0
     - _Size: 3
     - _Smoothness: 0
@@ -102,7 +104,7 @@ Material:
     - _WorkflowMode: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.040850822, g: 0.6116099, b: 0.9622642, a: 0.6784314}
+    - _BaseColor: {r: 0.27634388, g: 0.632157, b: 0.8490566, a: 0.6784314}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DarkFoamColor: {r: 0.1812392, g: 0.5608159, b: 0.872, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
