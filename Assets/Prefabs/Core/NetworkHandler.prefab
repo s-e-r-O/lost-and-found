@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2927581868247046277}
-  - component: {fileID: 2927581868247046276}
-  - component: {fileID: 2927581868247046275}
-  - component: {fileID: 2927581868247046274}
+  - component: {fileID: 628310301}
+  - component: {fileID: 628310302}
+  - component: {fileID: 628310303}
   m_Layer: 0
   m_Name: NetworkHandler
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2927581868247046276
+--- !u!114 &628310301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,27 +42,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2927581868247046273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  runInBackground: 1
-  autoStartServerBuild: 1
-  showDebugMessages: 0
-  serverTickRate: 30
-  offlineScene: 
-  onlineScene: 
-  transport: {fileID: 2927581868247046275}
-  networkAddress: localhost
-  maxConnections: 4
-  disconnectInactiveConnections: 0
-  disconnectInactiveTimeout: 60
-  authenticator: {fileID: 0}
-  playerPrefab: {fileID: 1051618581392927317, guid: c8e3c17430ad173449cf4d43e9e75b25, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 0
-  spawnPrefabs: []
---- !u!114 &2927581868247046275
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
+--- !u!114 &628310302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,7 +69,7 @@ MonoBehaviour:
   ReceiveWindowSize: 128
   debugLog: 0
   debugGUI: 0
---- !u!114 &2927581868247046274
+--- !u!114 &628310303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,9 +78,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2927581868247046273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
+  m_Script: {fileID: 11500000, guid: f8db67510110d8e458fbbf8c4f1198eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showGUI: 1
-  offsetX: 0
-  offsetY: 0
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  autoStartServerBuild: 1
+  showDebugMessages: 0
+  serverTickRate: 30
+  offlineScene: 
+  onlineScene: 
+  transport: {fileID: 628310302}
+  networkAddress: localhost
+  maxConnections: 4
+  disconnectInactiveConnections: 0
+  disconnectInactiveTimeout: 60
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 1009446103195081603, guid: 732e5c2abf51d1f4da2544d992d76ac1, type: 3}
+  autoCreatePlayer: 1
+  playerSpawnMethod: 0
+  spawnPrefabs:
+  - {fileID: 1051618581392927317, guid: c8e3c17430ad173449cf4d43e9e75b25, type: 3}
+  - {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
+  finder: {fileID: 1051618581392927317, guid: c8e3c17430ad173449cf4d43e9e75b25, type: 3}
+  car: {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
