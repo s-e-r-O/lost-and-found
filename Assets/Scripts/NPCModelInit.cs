@@ -7,7 +7,6 @@ public class NPCModelInit : NetworkBehaviour
 {
     public GameObject hair;
     public GameObject[] characters;
-    //public Color[] colors;
 
     [SyncVar]
     public int modelIndex;
@@ -25,6 +24,11 @@ public class NPCModelInit : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+            GenerateRandom();
+    }
+
+    void GenerateRandom()
+    {
 
         modelIndex = Random.Range(0, characters.Length);
         //colorIndex = Random.Range(0, colors.Length);
@@ -34,10 +38,8 @@ public class NPCModelInit : NetworkBehaviour
         size = Random.Range(1.6f, 1.9f);
     }
 
-    public override void OnStartClient()
+    void ApplyRandom()
     {
-        base.OnStartClient();
-
         transform.localScale = Vector3.one * size;
 
         for (int i = 0; i < characters.Length; i++)
@@ -57,9 +59,10 @@ public class NPCModelInit : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    void ApplyModel(int modelIndex, int colorIndex, bool hasHair)
+    public override void OnStartClient()
     {
-        Debug.Log($"Init with {modelIndex} {colorIndex} {hasHair}");
+        base.OnStartClient();
+            ApplyRandom();
+        
     }
 }

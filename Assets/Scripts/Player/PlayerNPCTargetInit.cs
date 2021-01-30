@@ -12,7 +12,7 @@ public class PlayerNPCTargetInit : NetworkBehaviour
         var npcs = FindObjectsOfType<NPCAgent>();
         foreach(var npc in npcs)
         {
-            npc.SetTarget(transform);
+            //npc.SetTarget(transform);
         }
     }
 }
