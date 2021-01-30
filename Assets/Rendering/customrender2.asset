@@ -54,7 +54,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -2170706718415246974}
   - {fileID: 2284088580902232225}
-  m_RendererFeatureMap: 82294e91bd19e0e1a120347476b6b21f
+  - {fileID: 7898414532717823152}
+  m_RendererFeatureMap: 82294e91bd19e0e1a120347476b6b21fb0c46d7f2bce9c6d
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
@@ -115,3 +116,16 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &7898414532717823152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db890b7cbfcfd0c4cb11d663f9321f9a, type: 3}
+  m_Name: NewDepthNormalsFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
