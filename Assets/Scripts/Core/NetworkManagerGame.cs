@@ -13,7 +13,8 @@ public class NetworkManagerGame : NetworkManager
         bool isFinder = numPlayers == 0;
         if (isFinder)
         {
-            GameObject player = Instantiate(finder);
+            var transformPosition = GetStartPosition();
+            GameObject player = Instantiate(finder, transformPosition.position, Quaternion.identity);
             NetworkServer.AddPlayerForConnection(conn, player);
         } else
         {
