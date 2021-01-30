@@ -1,13 +1,9 @@
 fileFormatVersion: 2
 guid: 35e2ac7db1165da40aad559f01021327
-<<<<<<< HEAD
-DefaultImporter:
-  externalObjects: {}
-=======
 timeCreated: 1580698663
 licenseType: Store
 DefaultImporter:
->>>>>>> ae60f4e... Made better grass material
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 
