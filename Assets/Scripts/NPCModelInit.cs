@@ -7,13 +7,13 @@ public class NPCModelInit : NetworkBehaviour
 {
     public GameObject hair;
     public GameObject[] characters;
-    public Color[] colors;
+    //public Color[] colors;
 
     [SyncVar]
     public int modelIndex;
 
     [SyncVar]
-    public int colorIndex;
+    public Color color;
 
     [SyncVar]
     public bool hasHair;
@@ -27,10 +27,11 @@ public class NPCModelInit : NetworkBehaviour
         base.OnStartServer();
 
         modelIndex = Random.Range(0, characters.Length);
-        colorIndex = Random.Range(0, colors.Length);
+        //colorIndex = Random.Range(0, colors.Length);
+        color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
         hasHair = Random.Range(0f, 1f) > 0.5f;
 
-        size = Random.Range(1.4f, 1.9f);
+        size = Random.Range(1.6f, 1.9f);
     }
 
     public override void OnStartClient()
@@ -44,7 +45,7 @@ public class NPCModelInit : NetworkBehaviour
             characters[i].SetActive(i == modelIndex);
             if (i == modelIndex)
             {
-                Color color = colors[colorIndex];
+                //Color color = colors[colorIndex];
                 SkinnedMeshRenderer mr = characters[i].GetComponent<SkinnedMeshRenderer>();
                 mr.material.color = color;
             }
@@ -52,7 +53,7 @@ public class NPCModelInit : NetworkBehaviour
         hair.SetActive(hasHair);
         if (hasHair)
         {
-            hair.GetComponent<MeshRenderer>().material.color = colors[colorIndex];
+            hair.GetComponent<MeshRenderer>().material.color = color;
         }
     }
 
