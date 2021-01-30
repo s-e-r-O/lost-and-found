@@ -100,5 +100,6 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 1051618581392927317, guid: c8e3c17430ad173449cf4d43e9e75b25, type: 3}
   - {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
+  - {fileID: 4360235441301587921, guid: 668489001be95194ab249c4d5994a477, type: 3}
   finder: {fileID: 1051618581392927317, guid: c8e3c17430ad173449cf4d43e9e75b25, type: 3}
   car: {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
