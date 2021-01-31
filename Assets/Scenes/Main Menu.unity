@@ -3636,10 +3636,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1216454872}
     m_Modifications:
+    - target: {fileID: 3910819633775885791, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 262807678}
+    - target: {fileID: 3910819633775885791, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700390715072051328, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 262807678}
+    - target: {fileID: 4700390715072051328, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 6123722543041912217, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 262807678}
+    - target: {fileID: 6123722543048243306, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
+      propertyPath: m_text
+      value: 'LOST AND FOUND IS A GAME THAT CONSISTS OF TWO TEAMS: FINDERS, AND ITEMS.'
+      objectReference: {fileID: 0}
     - target: {fileID: 6123722544025406284, guid: 72f2f72c7c178be4787b3e82eb097b01, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
