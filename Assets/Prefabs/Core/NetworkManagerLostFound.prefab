@@ -59,7 +59,7 @@ MonoBehaviour:
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1984687427104250757, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
   autoCreatePlayer: 1
-  playerSpawnMethod: 1
+  playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
   - {fileID: 4360235441301587921, guid: 668489001be95194ab249c4d5994a477, type: 3}
@@ -71,6 +71,7 @@ MonoBehaviour:
   minPlayers: 2
   menuScene: Main Menu
   levelScene: Level
+  gameDurationSeconds: 60
   roomPlayerPrefab: {fileID: -2397984927510013244, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
   gamePlayerPrefabs:
   - {fileID: 889465229587177054, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,11 @@ public class NetworkManagerLostFound : NetworkManager
     [SerializeField] private int minPlayers = 2;
     [SerializeField] private string menuScene = string.Empty;
     [SerializeField] private string levelScene = string.Empty;
+
+    
+    [SerializeField] private int gameDurationSeconds = 60;
+    private int gameSeconds;
+    private bool startCounting;
 
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerLostFound roomPlayerPrefab;
@@ -70,6 +76,15 @@ public class NetworkManagerLostFound : NetworkManager
             var player = conn.identity.GetComponent<NetworkRoomPlayerLostFound>();
             RoomPlayers.Remove(player);
             NotifyPlayersOfReadyState();
+            //if (numPlayers < minPlayers) { StopServer(); }
+            //int finders = 0;
+            //int items = 0;
+            //foreach (var gplayer in GamePlayers)
+            //{
+            //    if (gplayer.PlayerType == "FINDER") { finders++; }
+            //    if (gplayer.PlayerType == "ITEM") { items++; }
+            //}
+            //return finders > 0 && items > 0 && (finders + items) == numPlayers;
         }
         base.OnServerDisconnect(conn);
     }
@@ -133,12 +148,23 @@ public class NetworkManagerLostFound : NetworkManager
     {
         if (sceneName.StartsWith(levelScene))
         {
+            gameSeconds = gameDurationSeconds;
+            int itemsC = GamePlayers.Where(g => g.PlayerType == "ITEM").Count();
+            List<Vector3> alreadyPosition = new List<Vector3>(); 
             for (int i = GamePlayers.Count - 1; i >= 0; i--)
             {
                 //GamePlayers[i].RpcInitializeCamera();
-                GamePlayers[i].transform.position = GetStartPosition().position;
+                var position = GetStartPosition().position;
+                while (alreadyPosition.Contains(position))
+                {
+                    position = GetStartPosition().position;
+                }
+                alreadyPosition.Add(position);
+                GamePlayers[i].transform.position = position;
                 GamePlayers[i].StartDetectingCollissions();
                 GamePlayers[i].TargetSetUpGraphics();
+                GamePlayers[i].GameSeconds = gameSeconds;
+                GamePlayers[i].ItemCounter = itemsC;
                 //var conn = RoomPlayers[i].connectionToClient;
                 //Debug.Log(GetStartPosition());
                 //var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -148,9 +174,12 @@ public class NetworkManagerLostFound : NetworkManager
                 //NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
                 //Debug.Log($"Generated for {conn.connectionId}",gamePlayerInstance.gameObject);
             }
+            startCounting = true;
+            StartCoroutine("Counter");
         }
         base.OnServerSceneChanged(sceneName);
     }
+
 
     public void CheckGameState()
     {
@@ -166,10 +195,46 @@ public class NetworkManagerLostFound : NetworkManager
                 }
             }
         }
+        foreach (var player in GamePlayers)
+        {
+            player.ItemCounter = itemsTotal - itemsCaught;
+        }
         if (itemsCaught == itemsTotal)
         {
-            Debug.Log("GAME OVER, FINDERS WIN!");
-            //StopServer();
+            NotifyGameOver("FINDER");
+        }
+        else if (gameSeconds <= 0)
+        {
+            NotifyGameOver("ITEM");
+        }
+    }
+
+    public void NotifyGameOver(string winner)
+    {
+        startCounting = false;
+        StopCoroutine("Counter");
+        foreach (var player in GamePlayers)
+        {
+            Debug.Log("Notifying");
+            player.TargetGameOver(winner);         
+
+        }
+    }
+
+    private IEnumerator Counter()
+    {
+        while (gameSeconds > 0 && startCounting)
+        {
+            yield return new WaitForSeconds(1f);
+            gameSeconds--;
+            foreach(var player in GamePlayers)
+            {
+                player.GameSeconds = gameSeconds;
+            }
+        }
+        if (gameSeconds <= 0)
+        {
+            CheckGameState();
         }
     }
 }

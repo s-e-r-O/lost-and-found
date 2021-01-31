@@ -3,11 +3,26 @@ using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NetworkGamePlayerLostFound : NetworkBehaviour
 {
+    [Header("UI")]
+    [SerializeField] GameObject gameUI;
+    [SerializeField] GameObject typeFinderIcon;
+    [SerializeField] GameObject typeItemIcon;
+    [SerializeField] TMP_Text clockTime;
+    [SerializeField] TMP_Text itemCounter;
+
+    [SyncVar(hook = nameof(HandleGameSecondsChanged))] 
+    public int GameSeconds;
+    [SyncVar(hook = nameof(HandleItemsCounterChanged))]
+    public int ItemCounter;
+
+    [Header("Others")]
+    [SerializeField] GameObject graphics;
     [SerializeField] Outline outline;
 
     [SyncVar]
@@ -24,6 +39,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     public bool IsCaught = false;
 
 
+    public override void OnStartAuthority()
+    {
+        gameUI.SetActive(true);
+    }
     //public bool InGame()
     //{
     //    return PlayerType == "FINDER" || (PlayerType == "ITEM" && !IsCaught);
@@ -82,7 +101,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
                 if (PlayerType == "FINDER" && other.PlayerType == "ITEM")
                 {
                     Debug.Log($"Bye bye {other.name}");
+                    other.IsCaught = true;
+
                     other.RpcPlayerCaught();
+                    Room.CheckGameState();
                 }
             }
         }
@@ -99,11 +121,11 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [ClientRpc]
     private void RpcPlayerCaught()
     {
-        gameObject.SetActive(false);
+        graphics.SetActive(false);
         IsCaught = true;
-        Room.CheckGameState();
         if (hasAuthority)
         {
+            playerCamera.Follow = null;
             foreach (var player in Room.GamePlayers)
             {
                 if (player.PlayerType == "ITEM" && !player.IsCaught)
@@ -140,6 +162,46 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
 
     }
 
+    [TargetRpc]
+    public void TargetGameOver(string winner)
+    {
+        if (winner == "FINDER")
+        {
+            Debug.Log("GAME OVER, FINDERS WIN!");
+        }
+        if (winner == "ITEM")
+        {
+            Debug.Log("GAME OVER, ITEMS WIN!");
+        }
+    }
+
+    private void HandleGameSecondsChanged(int oldValue, int newValue) => UpdateUI();
+    private void HandleItemsCounterChanged(int oldValue, int newValue) => UpdateUI();
+
+    private void UpdateUI()
+    {
+        if (!hasAuthority)
+        {
+            foreach (var player in Room.GamePlayers)
+            {
+                if (player.hasAuthority)
+                {
+                    player.UpdateUI();
+                    break;
+                }
+            }
+            return;
+        }
+
+        typeFinderIcon.SetActive(PlayerType == "FINDER");
+        typeItemIcon.SetActive(PlayerType == "ITEM");
+        itemCounter.text = ItemCounter.ToString();
+        string h = (GameSeconds / 60).ToString("00");
+        string m = (GameSeconds % 60).ToString("00");
+        clockTime.text = h + ":" + m;
+
+    }
+
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
         if (null == obj)
@@ -151,7 +213,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
 
         foreach (Transform child in obj.transform)
         {
-            if (null == child)
+            if (null == child || child.gameObject.layer == 5)
             {
                 continue;
             }
