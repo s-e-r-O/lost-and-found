@@ -6,6 +6,10 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private NetworkManagerLostFound networkManager;
 
+    private void Start()
+    {
+        AudioManager.Instance.ChangeBackgroundMusic("Menu");
+    }
     public void HostGame()
     {
         networkManager.StartHost();
