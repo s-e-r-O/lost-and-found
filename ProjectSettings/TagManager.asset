@@ -15,9 +15,9 @@ TagManager:
   - 
   - 
   - GrabberHitbox
-  - Item
+  - Enemy
+  - Team
   - Player
-  - 
   - 
   - 
   - 

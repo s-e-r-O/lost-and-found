@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Transparent
+  m_Name: Transparent_Player
   m_Shader: {fileID: -6465566751694194690, guid: fc2ab623c65958e499ff9849c0171a06, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -77,7 +77,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_923A1208: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0}
+    - Color_923A1208: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

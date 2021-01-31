@@ -25,6 +25,7 @@ public class NetworkManagerLostFound : NetworkManager
     public List<NetworkRoomPlayerLostFound> RoomPlayers { get; } = new List<NetworkRoomPlayerLostFound>();
     public List<NetworkGamePlayerLostFound> GamePlayers { get; } = new List<NetworkGamePlayerLostFound>();
 
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
@@ -136,6 +137,8 @@ public class NetworkManagerLostFound : NetworkManager
             {
                 //GamePlayers[i].RpcInitializeCamera();
                 GamePlayers[i].transform.position = GetStartPosition().position;
+                GamePlayers[i].StartDetectingCollissions();
+                GamePlayers[i].TargetSetUpGraphics();
                 //var conn = RoomPlayers[i].connectionToClient;
                 //Debug.Log(GetStartPosition());
                 //var gamePlayerInstance = Instantiate(gamePlayerPrefab);
@@ -147,5 +150,26 @@ public class NetworkManagerLostFound : NetworkManager
             }
         }
         base.OnServerSceneChanged(sceneName);
+    }
+
+    public void CheckGameState()
+    {
+        int itemsCaught = 0;
+        int itemsTotal = 0;
+        foreach(var player in GamePlayers)
+        {
+            if (player.PlayerType == "ITEM") {
+                itemsTotal++;
+                if (player.IsCaught)
+                {
+                    itemsCaught++;
+                }
+            }
+        }
+        if (itemsCaught == itemsTotal)
+        {
+            Debug.Log("GAME OVER, FINDERS WIN!");
+            //StopServer();
+        }
     }
 }
