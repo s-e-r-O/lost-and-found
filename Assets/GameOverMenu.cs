@@ -35,5 +35,17 @@ public class GameOverMenu : MonoBehaviour
     public void Back()
     {
         Room.StopHost();
+        //StartCoroutine(BackRoutine());
+    }
+
+    IEnumerator BackRoutine()
+    {
+        SceneTransition.Instance.Close();
+        yield return new WaitForSeconds(1f);
+
+        Room.StopHost();
+        yield return new WaitForSeconds(1f);
+
+        SceneTransition.Instance.Open();
     }
 }

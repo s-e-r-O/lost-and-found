@@ -148,6 +148,19 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     }
 
     [TargetRpc]
+    public void TargetStartTransition()
+    {
+        SceneTransition.Instance.Close();
+    }
+
+
+    [TargetRpc]
+    public void TargetEndTransition()
+    {
+        SceneTransition.Instance.Open();
+    }
+
+    [TargetRpc]
     public void TargetSetUpGraphics()
     {
         if (hasAuthority)
