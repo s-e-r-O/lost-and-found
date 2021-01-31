@@ -223,6 +223,49 @@ RenderTexture:
     m_WrapW: 1
   m_Dimension: 2
   m_VolumeDepth: 1
+--- !u!1 &960354449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 960354451}
+  - component: {fileID: 960354450}
+  m_Layer: 0
+  m_Name: MusicChange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &960354450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960354449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f27650f834cb8347aba901c205223c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &960354451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960354449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 64.72589, y: -30.49418, z: 4.991418}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1456184298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -345,3 +388,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c31655d129b292144a68782d0b448562, type: 3}
+--- !u!1001 &7049405608943916931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1828144779995474160, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 64.72589
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -30.49418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.991418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828144779995474162, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e18260ea9ba5fa74eac4d4b3247a4e89, type: 3}
