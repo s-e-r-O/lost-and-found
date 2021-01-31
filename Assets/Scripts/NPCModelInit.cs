@@ -32,7 +32,7 @@ public class NPCModelInit : NetworkBehaviour
 
         modelIndex = Random.Range(0, characters.Length);
         //colorIndex = Random.Range(0, colors.Length);
-        color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        color = Random.ColorHSV(0f, 1f, 0.5f, 0.8f, 0.3f, 0.8f);
         hasHair = Random.Range(0f, 1f) > 0.5f;
 
         size = Random.Range(1.6f, 1.9f);
