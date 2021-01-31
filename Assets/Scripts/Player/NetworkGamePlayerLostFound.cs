@@ -68,7 +68,11 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
         Room.GamePlayers.Add(this);
         if (hasAuthority)
         {
-            playerCamera = Instantiate(playerCameraPrefab);
+            playerCamera = FindObjectOfType<CinemachineVirtualCamera>();
+            if (playerCamera == null)
+            {
+                playerCamera = Instantiate(playerCameraPrefab);
+            }
             playerCamera.Follow = transform;
             DontDestroyOnLoad(playerCamera.gameObject);
         }
@@ -136,6 +140,13 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
             }
         }
     }
+
+    [TargetRpc]
+    public void TargetClean()
+    {
+        Destroy(playerCamera);
+    }
+
     [TargetRpc]
     public void TargetSetUpGraphics()
     {
