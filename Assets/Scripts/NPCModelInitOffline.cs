@@ -11,7 +11,7 @@ public class NPCModelInitOffline : MonoBehaviour
     {
         var modelIndex = Random.Range(0, characters.Length);
         //colorIndex = Random.Range(0, colors.Length);
-        var color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+        var color = Random.ColorHSV(0f, 1f, 0.5f, 0.8f, 0.3f, 0.8f);
         var hasHair = Random.Range(0f, 1f) > 0.5f;
 
         var size = Random.Range(1.6f, 1.9f);
