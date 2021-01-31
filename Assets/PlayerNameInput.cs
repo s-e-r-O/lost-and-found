@@ -9,7 +9,7 @@ public class PlayerNameInput : MonoBehaviour
     [SerializeField] TMP_InputField playerInputField;
     [SerializeField] Button[] disabledButtons;
 
-    public string DisplayName { get; private set; }
+    public static string DisplayName { get; private set; }
     private const string PlayerPrefsNameKey = "PlayerName";
     // Start is called before the first frame update
     void Start()
