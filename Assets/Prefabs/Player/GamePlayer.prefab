@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 6383243516083944606}
   - component: {fileID: 5709064850051881196}
   - component: {fileID: 4994628542198461258}
-  - component: {fileID: 4282138356105643975}
   - component: {fileID: 2254171310318011275}
+  - component: {fileID: 889465229587177054}
   m_Layer: 9
-  m_Name: CarPlayer
+  m_Name: GamePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,21 +128,6 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &4282138356105643975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410598822694841937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a1d6ca25e24cdf4caad69dd61177e66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerCameraPrefab: {fileID: 6951556498593844986, guid: 844bab305646d724a9b02da553792882, type: 3}
 --- !u!114 &2254171310318011275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +142,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+--- !u!114 &889465229587177054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410598822694841937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e81342c5481ba94a87528f47f96e6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerCameraPrefab: {fileID: 6951556498593844986, guid: 844bab305646d724a9b02da553792882, type: 3}
 --- !u!1 &410598823339781475
 GameObject:
   m_ObjectHideFlags: 0
