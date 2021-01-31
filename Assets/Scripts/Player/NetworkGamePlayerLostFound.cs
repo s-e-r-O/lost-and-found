@@ -15,6 +15,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [SerializeField] GameObject typeItemIcon;
     [SerializeField] TMP_Text clockTime;
     [SerializeField] TMP_Text itemCounter;
+    [SerializeField] GameOverMenu gameOverUI;
 
     [SyncVar(hook = nameof(HandleGameSecondsChanged))] 
     public int GameSeconds;
@@ -165,14 +166,30 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [TargetRpc]
     public void TargetGameOver(string winner)
     {
-        if (winner == "FINDER")
-        {
-            Debug.Log("GAME OVER, FINDERS WIN!");
-        }
-        if (winner == "ITEM")
-        {
-            Debug.Log("GAME OVER, ITEMS WIN!");
-        }
+        Debug.Log("Game Over: " + winner);
+        //if (!hasAuthority)
+        //{
+        //    foreach (var player in Room.GamePlayers)
+        //    {
+        //        if (player.hasAuthority)
+        //        {
+        //            player.gameOverUI.gameObject.SetActive(true);
+        //            player.gameOverUI.SetWinner(winner);
+        //            break;
+        //        }
+        //    }
+        //    return;
+        //}
+        gameOverUI.gameObject.SetActive(true);
+        gameOverUI.SetWinner(winner);
+        //if (winner == "FINDER")
+        //{
+        //    Debug.Log("GAME OVER, FINDERS WIN!");
+        //}
+        //if (winner == "ITEM")
+        //{
+        //    Debug.Log("GAME OVER, ITEMS WIN!");
+        //}
     }
 
     private void HandleGameSecondsChanged(int oldValue, int newValue) => UpdateUI();
