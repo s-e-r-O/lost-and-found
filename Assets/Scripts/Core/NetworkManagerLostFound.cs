@@ -10,14 +10,19 @@ public class NetworkManagerLostFound : NetworkManager
 {
     [SerializeField] private int minPlayers = 2;
     [SerializeField] private string menuScene = string.Empty;
+    [SerializeField] private string levelScene = string.Empty;
 
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerLostFound roomPlayerPrefab;
+
+    [Header("Game")]
+    [SerializeField] private NetworkGamePlayerLostFound gamePlayerPrefab;
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
 
     public List<NetworkRoomPlayerLostFound> RoomPlayers { get; } = new List<NetworkRoomPlayerLostFound>();
+    public List<NetworkGamePlayerLostFound> GamePlayers { get; } = new List<NetworkGamePlayerLostFound>();
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -90,5 +95,55 @@ public class NetworkManagerLostFound : NetworkManager
             if (player.PlayerType == "ITEM") { items++; }
         }
         return finders > 0 && items > 0 && (finders + items) == numPlayers;
+    }
+
+    public void StartGame()
+    {
+        if (SceneManager.GetActiveScene().name == menuScene)
+        {
+            if (!IsReadyToStart()) { return; }
+            ServerChangeScene(levelScene);
+        }
+    }
+
+    public override void ServerChangeScene(string newSceneName)
+    {
+
+        //From menu to game
+        if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith(levelScene))
+        {
+            for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            {
+                var conn = RoomPlayers[i].connectionToClient;
+                Debug.Log(GetStartPosition());
+                var gamePlayerInstance = Instantiate(gamePlayerPrefab);
+                gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
+                NetworkServer.Destroy(conn.identity.gameObject);
+                NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
+            }
+        }
+
+        base.ServerChangeScene(newSceneName);
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if (sceneName.StartsWith(levelScene))
+        {
+            for (int i = GamePlayers.Count - 1; i >= 0; i--)
+            {
+                //GamePlayers[i].RpcInitializeCamera();
+                GamePlayers[i].transform.position = GetStartPosition().position;
+                //var conn = RoomPlayers[i].connectionToClient;
+                //Debug.Log(GetStartPosition());
+                //var gamePlayerInstance = Instantiate(gamePlayerPrefab);
+                //gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
+                ////NetworkServer.Destroy(conn.identity.gameObject);
+                //Debug.Log($"Generating for {conn.connectionId}...", gamePlayerInstance.gameObject);
+                //NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
+                //Debug.Log($"Generated for {conn.connectionId}",gamePlayerInstance.gameObject);
+            }
+        }
+        base.OnServerSceneChanged(sceneName);
     }
 }

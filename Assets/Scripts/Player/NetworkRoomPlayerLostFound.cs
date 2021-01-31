@@ -46,8 +46,11 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
 
     public override void OnStopClient()
     {
-        Room.RoomPlayers.Remove(this);
-        UpdateDisplay();
+            Room.RoomPlayers.Remove(this);
+            UpdateDisplay();
+        //if (isClientOnly)
+        //{
+        //}
     }
 
     public void HandleDisplayNameChanged(string oldValue, string newValue) => UpdateDisplay();
@@ -100,6 +103,6 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     public void CmdStartGame()
     {
         if (Room.RoomPlayers[0].connectionToClient != connectionToClient) { return; }
-        Debug.Log("START");
+        Room.StartGame();
     }
 }

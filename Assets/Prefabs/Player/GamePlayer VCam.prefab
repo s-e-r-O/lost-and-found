@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8126527158132579285, guid: 8429b54e1e134ae42b674fd5fe5bfd26, type: 3}
       propertyPath: m_CameraDistance
-      value: 40
+      value: 42.5
       objectReference: {fileID: 0}
     - target: {fileID: 8126527158132579285, guid: 8429b54e1e134ae42b674fd5fe5bfd26, type: 3}
       propertyPath: m_TrackedObjectOffset.y
@@ -73,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8726941830024191451, guid: 8429b54e1e134ae42b674fd5fe5bfd26, type: 3}
       propertyPath: m_Name
-      value: Car Player VCam
+      value: GamePlayer VCam
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8429b54e1e134ae42b674fd5fe5bfd26, type: 3}

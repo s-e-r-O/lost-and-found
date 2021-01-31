@@ -481,42 +481,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1111549364940701778, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_Color.r
-      value: 0.7169812
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701778, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_Color.g
-      value: 0.7169812
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701778, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_Color.b
-      value: 0.7169812
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701778, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701779, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.18301274
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701779, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6830127
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701779, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.18301274
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701779, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6830127
-      objectReference: {fileID: 0}
-    - target: {fileID: 1111549364940701779, guid: c31655d129b292144a68782d0b448562, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 1111549366117414581, guid: c31655d129b292144a68782d0b448562, type: 3}
       propertyPath: m_Name
       value: Level
@@ -3141,12 +3105,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 1984687427104250757, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
-    - target: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
-      propertyPath: menuScene
-      value: Main Menu
+      propertyPath: playerSpawnMethod
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7421033444207077735, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
       propertyPath: m_LocalPosition.x
