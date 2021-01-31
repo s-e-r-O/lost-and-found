@@ -162,8 +162,16 @@ public class NetworkManagerLostFound : NetworkManager
                 gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
                 NetworkServer.Destroy(conn.identity.gameObject);
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
+                gamePlayerInstance.TargetStartTransition();
             }
         }
+
+        StartCoroutine(Delay(newSceneName));
+    }
+
+    private IEnumerator Delay(string newSceneName)
+    {
+        yield return new WaitForSeconds(1f);
 
         base.ServerChangeScene(newSceneName);
     }
@@ -197,9 +205,11 @@ public class NetworkManagerLostFound : NetworkManager
                 //Debug.Log($"Generating for {conn.connectionId}...", gamePlayerInstance.gameObject);
                 //NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
                 //Debug.Log($"Generated for {conn.connectionId}",gamePlayerInstance.gameObject);
+            GamePlayers[i].TargetEndTransition();
             }
             startCounting = true;
             StartCoroutine("Counter");
+
         }
         base.OnServerSceneChanged(sceneName);
     }
