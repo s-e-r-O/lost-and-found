@@ -13,23 +13,41 @@ public class JoinMenu : MonoBehaviour
     [SerializeField] private TMP_InputField ipAddressInputField;
     [SerializeField] private Button joinButton;
 
+    private const string PlayerPrefsIPKey = "HostIP";
+
     public UnityEvent onConnected = new UnityEvent();
     public UnityEvent onDisconnected = new UnityEvent();
-
-    private void OnEnable()
+    void Start()
     {
+        SetUpInputField();
         NetworkManagerLostFound.OnClientConnected += HandleClientConnected;
         NetworkManagerLostFound.OnClientDisconnected += HandleClientDisconnected;
     }
+
+    private void SetUpInputField()
+    {
+        //if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)) { return; }
+
+        var ip = PlayerPrefs.GetString(PlayerPrefsIPKey, "localhost");
+
+        ipAddressInputField.text = ip;
+
+    }
+    private void OnEnable()
+    {
+        //NetworkManagerLostFound.OnClientConnected += HandleClientConnected;
+        //NetworkManagerLostFound.OnClientDisconnected += HandleClientDisconnected;
+    }
     private void OnDisable()
     {
-        NetworkManagerLostFound.OnClientConnected -= HandleClientConnected;
-        NetworkManagerLostFound.OnClientDisconnected -= HandleClientDisconnected;
+        //NetworkManagerLostFound.OnClientConnected -= HandleClientConnected;
+        //NetworkManagerLostFound.OnClientDisconnected -= HandleClientDisconnected;
     }
     public void JoinLobby()
     {
         string ipAddress = ipAddressInputField.text;
         networkManager.networkAddress = ipAddress;
+        PlayerPrefs.SetString(PlayerPrefsIPKey, ipAddress);
         networkManager.StartClient();
         joinButton.interactable = false;
     }
