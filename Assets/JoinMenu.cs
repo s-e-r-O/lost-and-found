@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,8 +8,15 @@ using UnityEngine.UI;
 
 public class JoinMenu : MonoBehaviour
 {
-    [SerializeField] private NetworkManagerLostFound networkManager;
-
+    private NetworkManagerLostFound room;
+    private NetworkManagerLostFound Room
+    {
+        get
+        {
+            if (room != null) { return room; }
+            return room = NetworkManager.singleton as NetworkManagerLostFound;
+        }
+    }
     [Header("UI")]
     [SerializeField] private TMP_InputField ipAddressInputField;
     [SerializeField] private Button joinButton;
@@ -46,9 +54,9 @@ public class JoinMenu : MonoBehaviour
     public void JoinLobby()
     {
         string ipAddress = ipAddressInputField.text;
-        networkManager.networkAddress = ipAddress;
+        Room.networkAddress = ipAddress;
         PlayerPrefs.SetString(PlayerPrefsIPKey, ipAddress);
-        networkManager.StartClient();
+        Room.StartClient();
         joinButton.interactable = false;
     }
     private void HandleClientConnected()

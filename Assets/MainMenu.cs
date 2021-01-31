@@ -1,18 +1,28 @@
-﻿using System.Collections;
+﻿using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private NetworkManagerLostFound networkManager;
+    private NetworkManagerLostFound room;
+    private NetworkManagerLostFound Room
+    {
+        get
+        {
+            if (room != null) { return room; }
+            return room = NetworkManager.singleton as NetworkManagerLostFound;
+        }
+    }
 
     private void Start()
     {
+
         AudioManager.Instance.ChangeBackgroundMusic("Menu");
     }
     public void HostGame()
     {
-        networkManager.StartHost();
+        Room.StartHost();
     }
 
     public void ExitGame()
