@@ -46,7 +46,7 @@ MonoBehaviour:
   sounds:
   - name: Menu
     clip: {fileID: 8300000, guid: 7dcc8fdf3fe11fc4b8994eaf5211ea36, type: 3}
-    volume: 1
+    volume: 0.3
     pitch: 1
     pitchMinRange: 0
     pitchMaxRange: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Gameplay
     clip: {fileID: 8300000, guid: 257d3e57a203cab41966e29f77cb23f9, type: 3}
-    volume: 1
+    volume: 0.3
     pitch: 1
     pitchMinRange: 0
     pitchMaxRange: 0
