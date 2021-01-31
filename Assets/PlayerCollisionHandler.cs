@@ -5,13 +5,16 @@ using UnityEngine;
 public class PlayerCollisionHandler : MonoBehaviour
 {
     [SerializeField] private NetworkGamePlayerLostFound player;
+    [SerializeField] private AudioSource hit;
+    [SerializeField] private AudioSource bush;
     public LayerMask bushLayer;
     private void OnCollisionEnter(Collision collision)
     { 
         PlayerCollisionHandler other = collision.gameObject.GetComponent<PlayerCollisionHandler>();
         if (other == null) 
         {
-            AudioManager.Instance.Play("Hit");
+            //AudioManager.Instance.Play("Hit");
+            hit.Play();
             return; 
         }
         player.OnPlayerCollision(other.player);
@@ -22,7 +25,9 @@ public class PlayerCollisionHandler : MonoBehaviour
     {
         PlayerCollisionHandler other = collision.gameObject.GetComponent<PlayerCollisionHandler>();
 
-        if (bushLayer == (bushLayer | (1 << collision.gameObject.layer)))
-            AudioManager.Instance.Play("Bush");
+        if (bushLayer == (bushLayer | (1 << collision.gameObject.layer))) {
+            bush.Play();   
+        }
+            //AudioManager.Instance.Play("Bush");
     }
 }
