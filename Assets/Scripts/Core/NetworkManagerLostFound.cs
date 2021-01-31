@@ -132,9 +132,16 @@ public class NetworkManagerLostFound : NetworkManager
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
                 var conn = RoomPlayers[i].connectionToClient;
-                Debug.Log(GetStartPosition());
+                //Debug.Log(GetStartPosition());
+                List<Vector3> alreadyPosition = new List<Vector3>();
+                var position = GetStartPosition().position;
+                while (alreadyPosition.Contains(position))
+                {
+                    position = GetStartPosition().position;
+                }
+                alreadyPosition.Add(position);
                 int index = Random.Range(0, gamePlayerPrefabs.Length);
-                var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index]);
+                var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index], position, Quaternion.identity);
                 gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
                 NetworkServer.Destroy(conn.identity.gameObject);
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
@@ -150,17 +157,17 @@ public class NetworkManagerLostFound : NetworkManager
         {
             gameSeconds = gameDurationSeconds;
             int itemsC = GamePlayers.Where(g => g.PlayerType == "ITEM").Count();
-            List<Vector3> alreadyPosition = new List<Vector3>(); 
+            //List<Vector3> alreadyPosition = new List<Vector3>(); 
             for (int i = GamePlayers.Count - 1; i >= 0; i--)
             {
-                //GamePlayers[i].RpcInitializeCamera();
-                var position = GetStartPosition().position;
-                while (alreadyPosition.Contains(position))
-                {
-                    position = GetStartPosition().position;
-                }
-                alreadyPosition.Add(position);
-                GamePlayers[i].transform.position = position;
+                ////GamePlayers[i].RpcInitializeCamera();
+                //var position = GetStartPosition().position;
+                //while (alreadyPosition.Contains(position))
+                //{
+                //    position = GetStartPosition().position;
+                //}
+                //alreadyPosition.Add(position);
+                //GamePlayers[i].transform.position = position;
                 GamePlayers[i].StartDetectingCollissions();
                 GamePlayers[i].TargetSetUpGraphics();
                 GamePlayers[i].GameSeconds = gameSeconds;
