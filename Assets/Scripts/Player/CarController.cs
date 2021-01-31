@@ -25,6 +25,30 @@ public class CarController : NetworkBehaviour
         //AudioManager.Instance.Play("Engine", true);
     }
 
+    private void Update()
+    {
+        if (isLocalPlayer && CheckIfFallen())
+        {
+            StartCoroutine(Restaure());
+        }
+    }
+
+    private bool CheckIfFallen()
+    {
+        return transform.rotation.eulerAngles.x > 60 && transform.rotation.eulerAngles.x < 300
+            || (transform.rotation.eulerAngles.z > 60 && transform.rotation.eulerAngles.z < 300);
+    }
+
+    private IEnumerator Restaure()
+    {
+        yield return new WaitForSeconds(3f);
+
+        if (CheckIfFallen())
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+    }
+
     void FixedUpdate()
     {
         if (isLocalPlayer)

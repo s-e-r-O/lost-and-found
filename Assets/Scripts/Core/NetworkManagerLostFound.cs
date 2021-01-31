@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class NetworkManagerLostFound : NetworkManager
 {
@@ -16,7 +17,7 @@ public class NetworkManagerLostFound : NetworkManager
     [SerializeField] private NetworkRoomPlayerLostFound roomPlayerPrefab;
 
     [Header("Game")]
-    [SerializeField] private NetworkGamePlayerLostFound gamePlayerPrefab;
+    [SerializeField] private NetworkGamePlayerLostFound[] gamePlayerPrefabs;
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
@@ -116,7 +117,8 @@ public class NetworkManagerLostFound : NetworkManager
             {
                 var conn = RoomPlayers[i].connectionToClient;
                 Debug.Log(GetStartPosition());
-                var gamePlayerInstance = Instantiate(gamePlayerPrefab);
+                int index = Random.Range(0, gamePlayerPrefabs.Length);
+                var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index]);
                 gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
                 NetworkServer.Destroy(conn.identity.gameObject);
                 NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);

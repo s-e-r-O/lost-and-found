@@ -8,6 +8,7 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject lobbyUI;
+    [SerializeField] private GameObject playUI;
     [SerializeField] private Button startGameButton;
     [SerializeField] private VerticalLayoutGroup playerList;
 
@@ -48,6 +49,7 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     {
             Room.RoomPlayers.Remove(this);
             UpdateDisplay();
+        Debug.Log("Disconnected/Destroyed from server");
         //if (isClientOnly)
         //{
         //}
