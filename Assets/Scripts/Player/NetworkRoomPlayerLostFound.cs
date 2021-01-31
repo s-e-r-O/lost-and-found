@@ -49,7 +49,7 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     {
             Room.RoomPlayers.Remove(this);
             UpdateDisplay();
-        Debug.Log("Disconnected/Destroyed from server");
+        //Debug.Log("Disconnected/Destroyed from server");
         //if (isClientOnly)
         //{
         //}

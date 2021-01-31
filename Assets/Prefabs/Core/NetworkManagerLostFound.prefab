@@ -49,11 +49,11 @@ MonoBehaviour:
   autoStartServerBuild: 1
   showDebugMessages: 0
   serverTickRate: 30
-  offlineScene: 
+  offlineScene: Assets/Scenes/Main Menu.unity
   onlineScene: 
   transport: {fileID: 770075710722949476}
   networkAddress: localhost
-  maxConnections: 4
+  maxConnections: 8
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
@@ -63,11 +63,22 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 410598822694841937, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
   - {fileID: 4360235441301587921, guid: 668489001be95194ab249c4d5994a477, type: 3}
+  - {fileID: 1921428822224112759, guid: f190b7ee5c8a1134cbd7c493a8333f29, type: 3}
+  - {fileID: 6181577968035074406, guid: 20529af1cc1e1c748b56a37f4e1ea86a, type: 3}
+  - {fileID: 2644267899179472425, guid: 4fe9c98aa3582f445bbe41f6a8c496c8, type: 3}
+  - {fileID: 5536720855566244848, guid: 8c502866cfd300b4499eadbdb01af418, type: 3}
+  - {fileID: 4230209067060063265, guid: ce3b6d2f42b21674db663aa4d19c37bd, type: 3}
   minPlayers: 2
   menuScene: Main Menu
   levelScene: Level
   roomPlayerPrefab: {fileID: -2397984927510013244, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
-  gamePlayerPrefab: {fileID: 889465229587177054, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
+  gamePlayerPrefabs:
+  - {fileID: 889465229587177054, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
+  - {fileID: 1387381126475824248, guid: f190b7ee5c8a1134cbd7c493a8333f29, type: 3}
+  - {fileID: 6639395418892214633, guid: 20529af1cc1e1c748b56a37f4e1ea86a, type: 3}
+  - {fileID: 3267622359665616422, guid: 4fe9c98aa3582f445bbe41f6a8c496c8, type: 3}
+  - {fileID: 4989105295863344127, guid: 8c502866cfd300b4499eadbdb01af418, type: 3}
+  - {fileID: 3701402704521845806, guid: ce3b6d2f42b21674db663aa4d19c37bd, type: 3}
 --- !u!114 &770075710722949476
 MonoBehaviour:
   m_ObjectHideFlags: 0

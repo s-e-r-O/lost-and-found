@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +8,29 @@ using UnityEngine.UI;
 
 public class NetworkGamePlayerLostFound : NetworkBehaviour
 {
+    [SerializeField] Outline outline;
+
     [SyncVar]
     private string displayName = "";
 
     [SyncVar]
-    private string playerType;
+    public string PlayerType;
 
-    public CinemachineVirtualCamera playerCameraPrefab;
+    [SyncVar]
+    private bool shouldDetectCollissions = false;
+
+
+    [SyncVar]
+    public bool IsCaught = false;
+
+
+    //public bool InGame()
+    //{
+    //    return PlayerType == "FINDER" || (PlayerType == "ITEM" && !IsCaught);
+    //}
+
+    [SerializeField] private CinemachineVirtualCamera playerCameraPrefab;
+    private CinemachineVirtualCamera playerCamera;
 
     private NetworkManagerLostFound room;
     private NetworkManagerLostFound Room
@@ -31,7 +48,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
         Room.GamePlayers.Add(this);
         if (hasAuthority)
         {
-            var playerCamera = Instantiate(playerCameraPrefab);
+            playerCamera = Instantiate(playerCameraPrefab);
             playerCamera.Follow = transform;
             DontDestroyOnLoad(playerCamera.gameObject);
         }
@@ -46,27 +63,99 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     public void SetPlayerValues(string name, string type)
     {
         displayName = name;
-        playerType = type;
+        PlayerType = type;
     }
 
-    //public void InitializeCamera()
+    [Server]
+    public void StartDetectingCollissions()
+    {
+        shouldDetectCollissions = true;
+    }
+
+    public void OnPlayerCollision(NetworkGamePlayerLostFound other)
+    {
+        if (shouldDetectCollissions)
+        {
+            Debug.Log($"This object {name} has collided with this {other.name}");
+            if (isServer)
+            {
+                if (PlayerType == "FINDER" && other.PlayerType == "ITEM")
+                {
+                    Debug.Log($"Bye bye {other.name}");
+                    other.RpcPlayerCaught();
+                }
+            }
+        }
+    }
+
+    //[Server]
+    //private void PlayerCaught()
     //{
-    //    RpcInitializeCamera();
-    //    if (hasAuthority)
-    //    {
-    //        var playerCamera = Instantiate(playerCameraPrefab);
-    //        playerCamera.Follow = transform;
-    //    }
+    //    IsCaught = true;
+    //    // Test some things
+    //    RpcPlayerCaught();
     //}
 
-    //[ClientRpc]
-    //public void RpcInitializeCamera()
-    //{
-    //    Debug.Log("Initializing");
-    //    if (hasAuthority)
-    //    {
-    //        var playerCamera = Instantiate(playerCameraPrefab);
-    //        playerCamera.Follow = transform;
-    //    }
-    //}
+    [ClientRpc]
+    private void RpcPlayerCaught()
+    {
+        gameObject.SetActive(false);
+        IsCaught = true;
+        Room.CheckGameState();
+        if (hasAuthority)
+        {
+            foreach (var player in Room.GamePlayers)
+            {
+                if (player.PlayerType == "ITEM" && !player.IsCaught)
+                {
+                    playerCamera.Follow = player.transform;
+                }
+            }
+        }
+    }
+    [TargetRpc]
+    public void TargetSetUpGraphics()
+    {
+        if (hasAuthority)
+        {
+            Debug.Log("Set Up Graphics");
+            foreach (var player in Room.GamePlayers)
+            {
+                if (player == this)
+                {
+                    outline.OutlineWidth = 0;
+                }
+                else if (player.PlayerType == PlayerType)
+                {
+                    player.outline.OutlineColor = Color.green;
+                    SetLayerRecursively(player.gameObject, 10);
+                }
+                else
+                {
+                    player.outline.OutlineColor = Color.red;
+                    SetLayerRecursively(player.gameObject, 9);
+                }
+            }
+        }
+
+    }
+
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (null == obj)
+        {
+            return;
+        }
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            if (null == child)
+            {
+                continue;
+            }
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
 }

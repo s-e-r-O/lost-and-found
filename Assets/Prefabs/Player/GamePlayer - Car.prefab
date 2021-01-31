@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6383243516083944606}
   - component: {fileID: 5709064850051881196}
   - component: {fileID: 4994628542198461258}
-  - component: {fileID: 2254171310318011275}
   - component: {fileID: 889465229587177054}
-  m_Layer: 10
+  - component: {fileID: 8425015079358969606}
+  m_Layer: 11
   m_Name: GamePlayer - Car
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -129,20 +129,6 @@ MonoBehaviour:
   syncAngularVelocity: 1
   clearAngularVelocity: 0
   angularVelocitySensitivity: 0.1
---- !u!114 &2254171310318011275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410598822694841937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640510ee817b0604fbb600ad7ed226ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
 --- !u!114 &889465229587177054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +143,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  outline: {fileID: 1980791957}
+  PlayerType: 
+  IsCaught: 0
   playerCameraPrefab: {fileID: 6951556498593844986, guid: 844bab305646d724a9b02da553792882, type: 3}
+--- !u!114 &8425015079358969606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410598822694841937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7c9bc59a6e24b048ad900313e03a04b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 889465229587177054}
 --- !u!1 &410598823339781475
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 410598823339781474}
   - component: {fileID: 410598823339781477}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +216,7 @@ GameObject:
   - component: {fileID: 5481679627932570297}
   - component: {fileID: 8014207483133019049}
   - component: {fileID: 8545306268404792823}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +310,8 @@ GameObject:
   - component: {fileID: 5078475299861267441}
   - component: {fileID: 4784280089892266742}
   - component: {fileID: 2050201438125776109}
-  m_Layer: 10
+  - component: {fileID: 1980791957}
+  m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,6 +386,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1980791957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808947103832497094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 1
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3993958312165875820
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +416,7 @@ GameObject:
   - component: {fileID: 4036094502429826876}
   - component: {fileID: 9078346163014436178}
   - component: {fileID: 5951130895790246421}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Wheel_BL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,7 +528,7 @@ GameObject:
   - component: {fileID: 2337583249147791401}
   - component: {fileID: 6656433914438389846}
   - component: {fileID: 1926564545711849857}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Wheel_TL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5747839989650471720}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Anthena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +672,7 @@ GameObject:
   - component: {fileID: 8024709709858586031}
   - component: {fileID: 988937086620554787}
   - component: {fileID: 7859976780648199668}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Wheel_TR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +784,7 @@ GameObject:
   - component: {fileID: 5426010257045796170}
   - component: {fileID: 3221028380171496268}
   - component: {fileID: 6341184847181674794}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +879,7 @@ GameObject:
   - component: {fileID: 2318357365503654127}
   - component: {fileID: 5552453710169970100}
   - component: {fileID: 8194598433933592323}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Wheel_BR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
