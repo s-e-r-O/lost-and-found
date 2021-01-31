@@ -92,6 +92,13 @@ public class NetworkManagerLostFound : NetworkManager
     public override void OnStopServer()
     {
         RoomPlayers.Clear();
+        gameSeconds = 0;
+        startCounting = false;
+        foreach(var player in GamePlayers)
+        {
+            player.TargetClean();
+        }
+        GamePlayers.Clear();
     }
 
     public void NotifyPlayersOfReadyState()
@@ -121,6 +128,16 @@ public class NetworkManagerLostFound : NetworkManager
             if (!IsReadyToStart()) { return; }
             ServerChangeScene(levelScene);
         }
+    }
+
+    public void EndGame()
+    {
+        
+        //if (SceneManager.GetActiveScene().name == menuScene)
+        //{
+        //    if (!IsReadyToStart()) { return; }
+        //    ServerChangeScene(levelScene);
+        //}
     }
 
     public override void ServerChangeScene(string newSceneName)
