@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - NPC
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -18,7 +17,7 @@ TagManager:
   - Enemy
   - Team
   - Player
-  - 
+  - Bush
   - 
   - 
   - 
@@ -41,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bush
+    uniqueID: 1166797433
     locked: 0

@@ -171,6 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 889465229587177054}
+  bushLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &410598823339781475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,6 +2513,10 @@ PrefabInstance:
     - target: {fileID: 7577939985761307825, guid: 5e12176cc08700e4cbd0dc2735e3f67e, type: 3}
       propertyPath: m_Name
       value: Items
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577939985761307825, guid: 5e12176cc08700e4cbd0dc2735e3f67e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8196738769632499268, guid: 5e12176cc08700e4cbd0dc2735e3f67e, type: 3}
       propertyPath: m_text

@@ -60,4 +60,28 @@ MonoBehaviour:
     pitchMaxRange: 0
     loop: 1
     source: {fileID: 0}
+  - name: Bush
+    clip: {fileID: 8300000, guid: 994a43c32ec1dbc48989876e0fc8125f, type: 3}
+    volume: 1
+    pitch: 1
+    pitchMinRange: 0
+    pitchMaxRange: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Caught
+    clip: {fileID: 8300000, guid: 074fa42da88918d48a89235d2faa99ae, type: 3}
+    volume: 1
+    pitch: 1
+    pitchMinRange: 0
+    pitchMaxRange: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: 82fa203f351ac8346b11fbc10a978247, type: 3}
+    volume: 1
+    pitch: 1
+    pitchMinRange: 0
+    pitchMaxRange: 0
+    loop: 0
+    source: {fileID: 0}
   lowVolume: 0.1
