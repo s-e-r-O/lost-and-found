@@ -66,6 +66,8 @@ public class NetworkManagerLostFound : NetworkManager
             NetworkRoomPlayerLostFound roomPlayerInstance = Instantiate(roomPlayerPrefab);
             roomPlayerInstance.IsLeader = isLeader;
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
+
+            NotifyPlayersOfReadyState();
         }
     }
 
@@ -105,12 +107,12 @@ public class NetworkManagerLostFound : NetworkManager
     {
         foreach(var player in RoomPlayers)
         {
-            player.HandleReadyToStart(IsReadyToStart());
+            player.LobbyState = IsReadyToStart();
         }
     }
-    public bool IsReadyToStart()
+    public LobbyState IsReadyToStart()
     {
-        if (numPlayers < minPlayers) { return false; }
+        if (numPlayers < minPlayers) { return LobbyState.NOT_ENOUGH_PLAYERS; }
         int finders = 0;
         int items = 0;
         foreach (var player in RoomPlayers)
@@ -118,14 +120,16 @@ public class NetworkManagerLostFound : NetworkManager
             if (player.PlayerType == "FINDER") { finders++; }
             if (player.PlayerType == "ITEM") { items++; }
         }
-        return finders > 0 && items > 0 && (finders + items) == numPlayers;
+        if ((finders + items) < numPlayers) { return LobbyState.PLAYERS_STILL_CHOOSING; }
+        if (finders == 0 || items == 0) { return LobbyState.EMPTY_TEAM; }
+        return LobbyState.READY;
     }
 
     public void StartGame()
     {
         if (SceneManager.GetActiveScene().name == menuScene)
         {
-            if (!IsReadyToStart()) { return; }
+            if (IsReadyToStart() != LobbyState.READY) { return; }
             ServerChangeScene(levelScene);
         }
     }
