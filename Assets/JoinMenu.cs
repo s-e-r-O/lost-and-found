@@ -20,6 +20,7 @@ public class JoinMenu : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_InputField ipAddressInputField;
     [SerializeField] private List<Selectable> toDisableWhenJoining;
+    [SerializeField] private GameObject spinner;
 
     private const string PlayerPrefsIPKey = "HostIP";
 
@@ -28,8 +29,6 @@ public class JoinMenu : MonoBehaviour
     void Start()
     {
         SetUpInputField();
-        NetworkManagerLostFound.OnClientConnected += HandleClientConnected;
-        NetworkManagerLostFound.OnClientDisconnected += HandleClientDisconnected;
     }
 
     private void SetUpInputField()
@@ -43,13 +42,13 @@ public class JoinMenu : MonoBehaviour
     }
     private void OnEnable()
     {
-        //NetworkManagerLostFound.OnClientConnected += HandleClientConnected;
-        //NetworkManagerLostFound.OnClientDisconnected += HandleClientDisconnected;
+        NetworkManagerLostFound.OnClientConnected += HandleClientConnected;
+        NetworkManagerLostFound.OnClientDisconnected += HandleClientDisconnected;
     }
     private void OnDisable()
     {
-        //NetworkManagerLostFound.OnClientConnected -= HandleClientConnected;
-        //NetworkManagerLostFound.OnClientDisconnected -= HandleClientDisconnected;
+        NetworkManagerLostFound.OnClientConnected -= HandleClientConnected;
+        NetworkManagerLostFound.OnClientDisconnected -= HandleClientDisconnected;
     }
     public void JoinLobby()
     {
@@ -58,16 +57,19 @@ public class JoinMenu : MonoBehaviour
         PlayerPrefs.SetString(PlayerPrefsIPKey, ipAddress);
         Room.StartClient();
         toDisableWhenJoining.ForEach(selectable => selectable.interactable = false);
+        spinner.SetActive(true);
     }
     private void HandleClientConnected()
     {
-        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true);
+        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true); 
+        spinner.SetActive(false);
         onConnected.Invoke();
 
     }
     private void HandleClientDisconnected()
     {
-        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true);
+        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true); 
+        spinner.SetActive(false);
         onDisconnected.Invoke();
     }
 }

@@ -134,6 +134,18 @@ public class NetworkManagerLostFound : NetworkManager
         }
     }
 
+    public void LeaveGame(bool isServer)
+    {
+        if (isServer)
+        {
+            StopHost();
+        } 
+        else
+        {
+            StopClient();
+        }
+    }
+
     public void EndGame()
     {
         

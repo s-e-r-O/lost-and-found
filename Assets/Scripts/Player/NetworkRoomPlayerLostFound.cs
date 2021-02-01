@@ -121,7 +121,14 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     [Command]
     public void CmdStartGame()
     {
-        if (Room.RoomPlayers[0].connectionToClient != connectionToClient) { return; }
+        if (!IsLeader) { return; }
         Room.StartGame();
+    }
+
+    public void LeaveGame()
+    {
+        //if (Room.RoomPlayers[0].connectionToClient != connectionToClient) { return; }
+
+        Room.LeaveGame(isServer);
     }
 }
