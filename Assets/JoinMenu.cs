@@ -19,7 +19,7 @@ public class JoinMenu : MonoBehaviour
     }
     [Header("UI")]
     [SerializeField] private TMP_InputField ipAddressInputField;
-    [SerializeField] private Button joinButton;
+    [SerializeField] private List<Selectable> toDisableWhenJoining;
 
     private const string PlayerPrefsIPKey = "HostIP";
 
@@ -57,17 +57,17 @@ public class JoinMenu : MonoBehaviour
         Room.networkAddress = ipAddress;
         PlayerPrefs.SetString(PlayerPrefsIPKey, ipAddress);
         Room.StartClient();
-        joinButton.interactable = false;
+        toDisableWhenJoining.ForEach(selectable => selectable.interactable = false);
     }
     private void HandleClientConnected()
     {
-        joinButton.interactable = true;
+        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true);
         onConnected.Invoke();
 
     }
     private void HandleClientDisconnected()
     {
-        joinButton.interactable = true;
+        toDisableWhenJoining.ForEach(selectable => selectable.interactable = true);
         onDisconnected.Invoke();
     }
 }
