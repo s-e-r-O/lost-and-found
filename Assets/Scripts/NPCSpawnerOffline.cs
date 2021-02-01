@@ -37,6 +37,7 @@ public class NPCSpawnerOffline : MonoBehaviour
             {
                 finalPosition = hit.position;
                 var npc = Instantiate(npcPrefab, finalPosition, Quaternion.identity);
+                npc.transform.parent = transform;
             }
 
         }
