@@ -66,16 +66,16 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     {
         DontDestroyOnLoad(gameObject);
         Room.GamePlayers.Add(this);
+        playerCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (playerCamera == null)
+        {
+            playerCamera = Instantiate(playerCameraPrefab);
+        }
         if (hasAuthority)
         {
-            playerCamera = FindObjectOfType<CinemachineVirtualCamera>();
-            if (playerCamera == null)
-            {
-                playerCamera = Instantiate(playerCameraPrefab);
-            }
             playerCamera.Follow = transform;
-            DontDestroyOnLoad(playerCamera.gameObject);
         }
+        DontDestroyOnLoad(playerCamera.gameObject);
     }
 
     public override void OnStopClient()
@@ -128,9 +128,9 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     {
         graphics.SetActive(false);
         IsCaught = true;
+        playerCamera.Follow = null;
         if (hasAuthority)
         {
-            playerCamera.Follow = null;
             foreach (var player in Room.GamePlayers)
             {
                 if (player.PlayerType == "ITEM" && !player.IsCaught)
