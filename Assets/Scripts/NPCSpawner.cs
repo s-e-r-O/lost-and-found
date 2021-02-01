@@ -16,11 +16,11 @@ public class NPCSpawner : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        base.OnStartServer();
-            Generate();
+        GenerateNPCs();
     }
 
-    public void Generate()
+    [ServerCallback]
+    public void GenerateNPCs()
     {
         for (int i = 0; i < npcTotal; i++)
         {
@@ -32,23 +32,16 @@ public class NPCSpawner : NetworkBehaviour
             {
                 finalPosition = hit.position;
                 var npc = Instantiate(npcPrefab, finalPosition, Quaternion.identity);
-                    NetworkServer.Spawn(npc);
-
+                NetworkServer.Spawn(npc);
             }
 
         }
 
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, radius);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

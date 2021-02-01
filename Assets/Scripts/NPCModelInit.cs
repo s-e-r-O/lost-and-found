@@ -5,20 +5,21 @@ using UnityEngine;
 
 public class NPCModelInit : NetworkBehaviour
 {
+    public Transform parent;
     public GameObject hair;
     public GameObject[] characters;
 
     [SyncVar]
-    public int modelIndex;
+    public int ModelIndex;
 
     [SyncVar]
-    public Color color;
+    public Color Color;
 
     [SyncVar]
-    public bool hasHair;
+    public bool HasHair;
 
     [SyncVar]
-    public float size;
+    public float Size;
 
 
     public override void OnStartServer()
@@ -30,39 +31,37 @@ public class NPCModelInit : NetworkBehaviour
     void GenerateRandom()
     {
 
-        modelIndex = Random.Range(0, characters.Length);
-        //colorIndex = Random.Range(0, colors.Length);
-        color = Random.ColorHSV(0f, 1f, 0.5f, 0.8f, 0.3f, 0.8f);
-        hasHair = Random.Range(0f, 1f) > 0.5f;
+        ModelIndex = Random.Range(0, characters.Length);
+        Color = Random.ColorHSV(0f, 1f, 0.5f, 0.8f, 0.3f, 0.8f);
+        HasHair = Random.Range(0f, 1f) > 0.5f;
 
-        size = Random.Range(1.6f, 1.9f);
+        Size = Random.Range(1.6f, 1.9f);
+        transform.localScale = Vector3.one * Size;
     }
-
-    void ApplyRandom()
+    private void ApplyRandom()
     {
-        transform.localScale = Vector3.one * size;
+        transform.localScale = Vector3.one * Size;
 
         for (int i = 0; i < characters.Length; i++)
         {
-            characters[i].SetActive(i == modelIndex);
-            if (i == modelIndex)
+            characters[i].SetActive(i == ModelIndex);
+            if (i == ModelIndex)
             {
                 //Color color = colors[colorIndex];
                 SkinnedMeshRenderer mr = characters[i].GetComponent<SkinnedMeshRenderer>();
-                mr.material.color = color;
+                mr.material.color = Color;
             }
         }
-        hair.SetActive(hasHair);
-        if (hasHair)
+        hair.SetActive(HasHair);
+        if (HasHair)
         {
-            hair.GetComponent<MeshRenderer>().material.color = color;
+            hair.GetComponent<MeshRenderer>().material.color = Color;
         }
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
-            ApplyRandom();
-        
+        ApplyRandom();
     }
 }
