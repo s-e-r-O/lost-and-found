@@ -7,40 +7,50 @@ using UnityEngine.AI;
 public class NPCAgent : NetworkBehaviour
 {
     [SerializeField]
-    float walkRadius = 10f;
+    private float walkRadius = 10f;
 
-    NavMeshAgent agent;
+    private NavMeshAgent agent;
 
     [SerializeField]
-    Animator anim;
+    private Animator anim;
 
-    [SyncVar]
-    float remainingDistance;
-    // Start is called before the first frame update
-    void Awake()
+    private float remainingDistance;
+
+    [HideInInspector]
+    [SyncVar(hook=nameof(OnRandomDirectionChange))]
+    public Vector3 randomDirection;
+
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
+    public override void OnStartClient()
+    {
+        StartCoroutine(SetParentRoutine());
+    }
+
+    [ClientCallback]
+    private IEnumerator SetParentRoutine()
+    {
+        // Adding a delay so NavAgent initializes properly
+        yield return new WaitForSeconds(1f);
+        NPCSpawner spawner;
+        if ((spawner = FindObjectOfType<NPCSpawner>()) != null){
+            transform.parent = spawner.transform;
+        }
+    }
+
     public override void OnStartServer()
     {
-        base.OnStartServer();
         StartCoroutine(RoamAround());
-        //StartCoroutine(GetClosestTarget());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isServer)
-        {
-            remainingDistance = agent.remainingDistance;
-        }
+        remainingDistance = agent.remainingDistance;
         anim.SetFloat("remainingDistance",remainingDistance);
-        //if (currentTarget != null)
-        //{
-        //    agent.SetDestination(currentTarget.position);
-        //}
     }
     
     [ServerCallback]
@@ -48,12 +58,19 @@ public class NPCAgent : NetworkBehaviour
     {
         while(true)
         {
-            Vector3 randomDirection = Random.insideUnitSphere * walkRadius;
-            randomDirection += transform.position;
-            NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, walkRadius, 1);
+            randomDirection = Random.insideUnitSphere * walkRadius + transform.position;
+            //RpcSetDestination(randomDirection);
+            yield return new WaitForSeconds(Random.Range(3f, 10f));
+        }
+    }
+
+    [ClientCallback]
+    private void OnRandomDirectionChange(Vector3 oldValue, Vector3 newValue)
+    {
+        if(NavMesh.SamplePosition(newValue, out NavMeshHit hit, walkRadius, 1))
+        {
             Vector3 finalPosition = hit.position;
             agent.SetDestination(finalPosition);
-            yield return new WaitForSeconds(Random.Range(3f, 10f));
         }
     }
 }
