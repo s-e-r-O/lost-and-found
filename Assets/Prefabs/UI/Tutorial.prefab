@@ -480,7 +480,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: as a finder, your job is to find the lost cars before time runs out. hit
-    them with your onw car to retrieve them.
+    them with your own car to retrieve them.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 477f52c72e01f6a4496426ed3b39016c, type: 2}
   m_sharedMaterial: {fileID: 2875261816891095751, guid: 477f52c72e01f6a4496426ed3b39016c, type: 2}
@@ -1094,7 +1094,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '(UNTITLED GAME) IS A GAME THAT CONSISTS OF TWO TEAMS: FINDERS, AND ITEMS.'
+  m_text: 'LOST AND FOUND IS A GAME THAT CONSISTS OF TWO TEAMS: FINDERS, AND ITEMS.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 477f52c72e01f6a4496426ed3b39016c, type: 2}
   m_sharedMaterial: {fileID: 2875261816891095751, guid: 477f52c72e01f6a4496426ed3b39016c, type: 2}

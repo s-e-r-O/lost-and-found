@@ -146,11 +146,10 @@ public class NetworkManagerLostFound : NetworkManager
         //From menu to game
         if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith(levelScene))
         {
+            List<Vector3> alreadyPosition = new List<Vector3>();
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
                 var conn = RoomPlayers[i].connectionToClient;
-                //Debug.Log(GetStartPosition());
-                List<Vector3> alreadyPosition = new List<Vector3>();
                 var position = GetStartPosition().position;
                 while (alreadyPosition.Contains(position))
                 {
