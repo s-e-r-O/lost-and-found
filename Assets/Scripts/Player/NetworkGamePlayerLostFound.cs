@@ -40,16 +40,6 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [SyncVar]
     public bool IsCaught = false;
 
-
-    public override void OnStartAuthority()
-    {
-        gameUI.SetActive(true);
-    }
-    //public bool InGame()
-    //{
-    //    return PlayerType == "FINDER" || (PlayerType == "ITEM" && !IsCaught);
-    //}
-
     [SerializeField] private CinemachineVirtualCamera playerCameraPrefab;
     private CinemachineVirtualCamera playerCamera;
 
@@ -256,5 +246,11 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
             }
             SetLayerRecursively(child.gameObject, newLayer);
         }
+    }
+
+    [TargetRpc]
+    public void TargetShowUI()
+    {
+        gameUI.SetActive(true);
     }
 }
