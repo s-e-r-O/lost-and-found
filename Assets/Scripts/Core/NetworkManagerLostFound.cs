@@ -197,30 +197,14 @@ public class NetworkManagerLostFound : NetworkManager
         {
             gameSeconds = gameDurationSeconds;
             int itemsC = GamePlayers.Where(g => g.PlayerType == "ITEM").Count();
-            //List<Vector3> alreadyPosition = new List<Vector3>(); 
             for (int i = GamePlayers.Count - 1; i >= 0; i--)
             {
-                ////GamePlayers[i].RpcInitializeCamera();
-                //var position = GetStartPosition().position;
-                //while (alreadyPosition.Contains(position))
-                //{
-                //    position = GetStartPosition().position;
-                //}
-                //alreadyPosition.Add(position);
-                //GamePlayers[i].transform.position = position;
                 GamePlayers[i].StartDetectingCollissions();
                 GamePlayers[i].TargetSetUpGraphics();
                 GamePlayers[i].GameSeconds = gameSeconds;
                 GamePlayers[i].ItemCounter = itemsC;
-                //var conn = RoomPlayers[i].connectionToClient;
-                //Debug.Log(GetStartPosition());
-                //var gamePlayerInstance = Instantiate(gamePlayerPrefab);
-                //gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
-                ////NetworkServer.Destroy(conn.identity.gameObject);
-                //Debug.Log($"Generating for {conn.connectionId}...", gamePlayerInstance.gameObject);
-                //NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
-                //Debug.Log($"Generated for {conn.connectionId}",gamePlayerInstance.gameObject);
-            GamePlayers[i].TargetEndTransition();
+                GamePlayers[i].TargetShowUI();
+                GamePlayers[i].TargetEndTransition();
             }
             startCounting = true;
             StartCoroutine("Counter");
