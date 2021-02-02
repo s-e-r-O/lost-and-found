@@ -16,6 +16,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [SerializeField] TMP_Text clockTime;
     [SerializeField] TMP_Text itemCounter;
     [SerializeField] GameOverMenu gameOverUI;
+    [SerializeField] TMP_Text foundMessage;
 
     [SyncVar(hook = nameof(HandleGameSecondsChanged))] 
     public int GameSeconds;
@@ -96,6 +97,23 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
         shouldDetectCollissions = true;
     }
 
+    [TargetRpc]
+    public void TargetHasBeenFoundByRadar(NetworkGamePlayerLostFound finder)
+    {
+        if (PlayerType != "ITEM") { return; }
+
+        StartCoroutine(ShowFoundMessage(finder.displayName));
+    }
+
+    IEnumerator ShowFoundMessage(string name)
+    {
+        foundMessage.gameObject.SetActive(true);
+        foundMessage.text = $"{name}'s radar has found you!";
+        yield return new WaitForSeconds(3f);
+
+        foundMessage.gameObject.SetActive(false);
+    }
+
     public void OnPlayerCollision(NetworkGamePlayerLostFound other)
     {
         if (shouldDetectCollissions)
@@ -127,10 +145,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     private void RpcPlayerCaught()
     {
         graphics.SetActive(false);
-        IsCaught = true;
-        playerCamera.Follow = null;
         if (hasAuthority)
         {
+            IsCaught = true;
+            playerCamera.Follow = null;
             foreach (var player in Room.GamePlayers)
             {
                 if (player.PlayerType == "ITEM" && !player.IsCaught)
@@ -165,7 +183,6 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            Debug.Log("Set Up Graphics");
             foreach (var player in Room.GamePlayers)
             {
                 if (player == this)
@@ -190,31 +207,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [TargetRpc]
     public void TargetGameOver(string winner)
     {
-        Debug.Log("Game Over: " + winner);
-        //if (!hasAuthority)
-        //{
-        //    foreach (var player in Room.GamePlayers)
-        //    {
-        //        if (player.hasAuthority)
-        //        {
-        //            player.gameOverUI.gameObject.SetActive(true);
-        //            player.gameOverUI.SetWinner(winner);
-        //            break;
-        //        }
-        //    }
-        //    return;
-        //}
         gameOverUI.gameObject.SetActive(true);
         gameOverUI.SetWinner(winner);
-        //if (winner == "FINDER")
-        //{
-        //    Debug.Log("GAME OVER, FINDERS WIN!");
-        //}
-        //if (winner == "ITEM")
-        //{
-        //    Debug.Log("GAME OVER, ITEMS WIN!");
-        //}
     }
+
 
     private void HandleGameSecondsChanged(int oldValue, int newValue) => UpdateUI();
     private void HandleItemsCounterChanged(int oldValue, int newValue) => UpdateUI();
