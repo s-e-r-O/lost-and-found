@@ -12,6 +12,8 @@ public class PlayerRadar : NetworkBehaviour
     [SerializeField] private float cooldown = 10f;
     [SerializeField] private float arrowDuration = 2f;
     [SerializeField] private float range = 50f;
+    [SerializeField] private Animator radarAnim;
+
     private NetworkGamePlayerLostFound gamePlayer;
 
 
@@ -37,6 +39,7 @@ public class PlayerRadar : NetworkBehaviour
         }
         radarUI.gameObject.SetActive(false);
         arrow.gameObject.SetActive(ShouldUseRadar);
+        radarAnim.gameObject.SetActive(ShouldUseRadar);
         if (ShouldUseRadar)
         {
             StartCoroutine(InitRadar());
@@ -49,7 +52,7 @@ public class PlayerRadar : NetworkBehaviour
         //radarUI.Starting();
         //yield return new WaitForSeconds(2f);
         radarUI.gameObject.SetActive(true);
-        radarUI.Searching();
+        Searching();
         yield return new WaitForSeconds(2f);
         StartCoroutine(SearchPlayersRoutine());
     }
@@ -60,7 +63,7 @@ public class PlayerRadar : NetworkBehaviour
         {
             CmdSearchPlayers();
             yield return new WaitForSeconds(cooldown-2f);
-            radarUI.Searching();
+            Searching();
             yield return new WaitForSeconds(2f);
 
         }
@@ -119,5 +122,12 @@ public class PlayerRadar : NetworkBehaviour
         yield return new WaitForSeconds(arrowDuration);
         arrow.Hide();
         radarUI.Cooldown(cooldown-arrowDuration);
+    }
+
+    private void Searching()
+    {
+        radarUI.Searching();
+        radarAnim.ResetTrigger("Search");
+        radarAnim.SetTrigger("Search");
     }
 }
