@@ -40,31 +40,22 @@ public class PlayerRadar : NetworkBehaviour
         radarUI.gameObject.SetActive(false);
         arrow.gameObject.SetActive(ShouldUseRadar);
         radarAnim.gameObject.SetActive(ShouldUseRadar);
+        radarUI.gameObject.SetActive(ShouldUseRadar);
         if (ShouldUseRadar)
         {
-            StartCoroutine(InitRadar());
+            radarUI.Cooldown(cooldown - 2f);
+            StartCoroutine(SearchPlayersRoutine());
         }
-    }
-
-    IEnumerator InitRadar()
-    {
-        yield return new WaitForSeconds(Mathf.Max(initDelay - 2f, 0f));
-        //radarUI.Starting();
-        //yield return new WaitForSeconds(2f);
-        radarUI.gameObject.SetActive(true);
-        Searching();
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(SearchPlayersRoutine());
     }
 
     IEnumerator SearchPlayersRoutine()
     {
         while (true)
         {
-            CmdSearchPlayers();
-            yield return new WaitForSeconds(cooldown-2f);
+            yield return new WaitForSeconds(cooldown - 2f);
             Searching();
             yield return new WaitForSeconds(2f);
+            CmdSearchPlayers();
 
         }
     }
@@ -88,7 +79,7 @@ public class PlayerRadar : NetworkBehaviour
         {
             TargetPlayerFound(closestPlayer.transform);
             closestPlayer.TargetHasBeenFoundByRadar(gamePlayer);
-        } 
+        }
         else
         {
             TargetNoPlayerFound();
@@ -121,7 +112,7 @@ public class PlayerRadar : NetworkBehaviour
     {
         yield return new WaitForSeconds(arrowDuration);
         arrow.Hide();
-        radarUI.Cooldown(cooldown-arrowDuration);
+        radarUI.Cooldown(cooldown - arrowDuration);
     }
 
     private void Searching()
