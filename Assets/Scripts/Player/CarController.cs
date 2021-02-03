@@ -9,13 +9,15 @@ public class CarController : NetworkBehaviour
     [SerializeField]
     private float acceleration = 1f;
     [SerializeField]
+    private float reverseAcceleration = 1f;
+    [SerializeField]
     private float maxSpeed = 1f;
     [SerializeField]
     private float steering = 1f;
-    
+
     [SerializeField]
     private Transform[] wheels;
-    
+
     private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -60,13 +62,13 @@ public class CarController : NetworkBehaviour
             //    wheel.rotation = Quaternion.FromToRotation(transform.forward, Quaternion.AngleAxis(-h * 20f, Vector3.up) * transform.forward);
             //}
             //AudioManager.Instance.ModifyPitch("Engine", v / 5f);
-            Vector3 speed = transform.forward * (v * acceleration);
+            Vector3 speed = transform.forward * (v * (v > 0f ? acceleration : reverseAcceleration));
             rb.AddForce(speed);
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 
             float direction = Vector3.Dot(transform.forward, rb.velocity);
 
-            transform.Rotate(transform.up, ((direction >= 0f? -1 : 1) * h * steering * rb.velocity.magnitude / maxSpeed));
+            transform.Rotate(transform.up, ((direction >= 0f ? -1 : 1) * h * steering * rb.velocity.magnitude / maxSpeed));
         }
     }
 }
