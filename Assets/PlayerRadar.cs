@@ -8,13 +8,14 @@ public class PlayerRadar : NetworkBehaviour
 {
     [SerializeField] private RadarUI radarUI;
     [SerializeField] private FollowArrow arrow;
-    [SerializeField] private float initDelay = 5f;
     [SerializeField] private float cooldown = 10f;
     [SerializeField] private float arrowDuration = 2f;
     [SerializeField] private float range = 50f;
     [SerializeField] private Animator radarAnim;
 
     private NetworkGamePlayerLostFound gamePlayer;
+
+    private bool readyToSearch = false;
 
 
     private NetworkManagerLostFound room;
@@ -43,7 +44,7 @@ public class PlayerRadar : NetworkBehaviour
         radarUI.gameObject.SetActive(ShouldUseRadar);
         if (ShouldUseRadar)
         {
-            radarUI.Cooldown(cooldown - 2f);
+            readyToSearch = true;
             StartCoroutine(SearchPlayersRoutine());
         }
     }
@@ -52,10 +53,14 @@ public class PlayerRadar : NetworkBehaviour
     {
         while (true)
         {
+
+            yield return new WaitUntil(() => readyToSearch);
+            radarUI.Cooldown(cooldown - 2f);
             yield return new WaitForSeconds(cooldown - 2f);
             Searching();
             yield return new WaitForSeconds(2f);
             CmdSearchPlayers();
+            readyToSearch = false;
 
         }
     }
@@ -104,15 +109,15 @@ public class PlayerRadar : NetworkBehaviour
     IEnumerator NotFoundMessage()
     {
         radarUI.NotFound();
-        yield return new WaitForSeconds(arrowDuration);
-        radarUI.Cooldown(cooldown - arrowDuration);
+        yield return new WaitForSeconds(2f);
+        readyToSearch = true;
     }
 
     IEnumerator HideArrow()
     {
         yield return new WaitForSeconds(arrowDuration);
         arrow.Hide();
-        radarUI.Cooldown(cooldown - arrowDuration);
+        readyToSearch = true;
     }
 
     private void Searching()
