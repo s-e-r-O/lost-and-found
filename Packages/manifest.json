@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.samdriver.driven-decals": "https://github.com/Anatta336/driven-decals.git",
     "com.unity.2d.pixel-perfect": "3.0.2",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.cinemachine": "2.6.3",
