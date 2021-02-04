@@ -391,7 +391,6 @@ MonoBehaviour:
   syncInterval: 0.1
   radarUI: {fileID: 1275001712447762028}
   arrow: {fileID: 71141807819392058}
-  initDelay: 10
   cooldown: 10
   arrowDuration: 8
   range: 60
@@ -813,7 +812,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cde71213dfb7b3545bb5d15e3d5177c7, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2678,7 +2677,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cde71213dfb7b3545bb5d15e3d5177c7, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3702,6 +3701,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 7112619899506798804, guid: 2110dc460de1aa24f901df71b9f628b9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3c497ad44122eac48aaf47a7fbf24205, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2110dc460de1aa24f901df71b9f628b9, type: 3}
 --- !u!4 &4833103103679345001 stripped
