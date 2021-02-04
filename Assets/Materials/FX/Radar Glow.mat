@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Radar Glow
-  m_Shader: {fileID: -6465566751694194690, guid: 394fbe54abefa104b91a1c386efc1c25, type: 3}
+  m_Shader: {fileID: 4800000, guid: a72966f6f554854448d65bf609185a40, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - Vector1_7A7EF58B: 0.21
+    - _HighlightThresholdMax: 0.0002
     m_Colors:
-    - Color_D272FF2C: {r: 0.9056604, g: 0.8914394, b: 0.06407974, a: 0}
+    - _HighlightColor: {r: 1, g: 0.9048885, b: 0, a: 0.5}
   m_BuildTextureStacks: []
