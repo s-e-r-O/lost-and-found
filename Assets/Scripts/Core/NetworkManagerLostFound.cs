@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -14,7 +13,7 @@ public class NetworkManagerLostFound : NetworkManager
     [SerializeField] private string menuScene = string.Empty;
     [SerializeField] private string levelScene = string.Empty;
 
-    
+
     [SerializeField] private int gameDurationSeconds = 60;
     private int gameSeconds;
     private bool startCounting;
@@ -66,7 +65,6 @@ public class NetworkManagerLostFound : NetworkManager
             NetworkRoomPlayerLostFound roomPlayerInstance = Instantiate(roomPlayerPrefab);
             roomPlayerInstance.IsLeader = isLeader;
             NetworkServer.AddPlayerForConnection(conn, roomPlayerInstance.gameObject);
-
             NotifyPlayersOfReadyState();
         }
     }
@@ -78,15 +76,6 @@ public class NetworkManagerLostFound : NetworkManager
             var player = conn.identity.GetComponent<NetworkRoomPlayerLostFound>();
             RoomPlayers.Remove(player);
             NotifyPlayersOfReadyState();
-            //if (numPlayers < minPlayers) { StopServer(); }
-            //int finders = 0;
-            //int items = 0;
-            //foreach (var gplayer in GamePlayers)
-            //{
-            //    if (gplayer.PlayerType == "FINDER") { finders++; }
-            //    if (gplayer.PlayerType == "ITEM") { items++; }
-            //}
-            //return finders > 0 && items > 0 && (finders + items) == numPlayers;
         }
         base.OnServerDisconnect(conn);
     }
@@ -96,7 +85,7 @@ public class NetworkManagerLostFound : NetworkManager
         RoomPlayers.Clear();
         gameSeconds = 0;
         startCounting = false;
-        foreach(var player in GamePlayers)
+        foreach (var player in GamePlayers)
         {
             player.TargetClean();
         }
@@ -105,7 +94,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void NotifyPlayersOfReadyState()
     {
-        foreach(var player in RoomPlayers)
+        foreach (var player in RoomPlayers)
         {
             player.LobbyState = IsReadyToStart();
         }
@@ -139,7 +128,7 @@ public class NetworkManagerLostFound : NetworkManager
         if (isServer)
         {
             StopHost();
-        } 
+        }
         else
         {
             StopClient();
@@ -148,20 +137,50 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void EndGame()
     {
-        
-        //if (SceneManager.GetActiveScene().name == menuScene)
-        //{
-        //    if (!IsReadyToStart()) { return; }
-        //    ServerChangeScene(levelScene);
-        //}
+
+    }
+
+    public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
+    {
+        base.OnClientChangeScene(newSceneName, sceneOperation, customHandling);
+    }
+
+    private IEnumerator Delay(Action action, float delay = 1f)
+    {
+        yield return new WaitForSeconds(delay);
+        action.Invoke();
+    }
+
+    public override void OnClientSceneChanged(NetworkConnection conn)
+    {
+        SceneTransition.Instance.Open();
+        base.OnClientSceneChanged(conn);
     }
 
     public override void ServerChangeScene(string newSceneName)
     {
-
+        float delay = 0f;
         //From menu to game
         if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith(levelScene))
         {
+            delay = 1f;
+            for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            {
+
+                var conn = RoomPlayers[i].connectionToClient;
+                RoomPlayers[i].TargetCloseTransition();
+                RoomPlayers[i].TargetHideUI();
+            }
+        }
+        StartCoroutine(Delay(() => base.ServerChangeScene(newSceneName), delay));
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if (sceneName.StartsWith(levelScene))
+        {
+            gameSeconds = gameDurationSeconds;
+            int itemsC = RoomPlayers.Where(g => g.PlayerType == "ITEM").Count();
             List<Vector3> alreadyPosition = new List<Vector3>();
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
@@ -174,37 +193,11 @@ public class NetworkManagerLostFound : NetworkManager
                 alreadyPosition.Add(position);
                 int index = Random.Range(0, gamePlayerPrefabs.Length);
                 var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index], position, Quaternion.identity);
+                NetworkServer.Spawn(gamePlayerInstance.gameObject, conn);
                 gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
-                NetworkServer.Destroy(conn.identity.gameObject);
-                NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject, true);
-                gamePlayerInstance.TargetStartTransition();
-            }
-        }
-
-        StartCoroutine(Delay(newSceneName));
-    }
-
-    private IEnumerator Delay(string newSceneName)
-    {
-        yield return new WaitForSeconds(1f);
-
-        base.ServerChangeScene(newSceneName);
-    }
-
-    public override void OnServerSceneChanged(string sceneName)
-    {
-        if (sceneName.StartsWith(levelScene))
-        {
-            gameSeconds = gameDurationSeconds;
-            int itemsC = GamePlayers.Where(g => g.PlayerType == "ITEM").Count();
-            for (int i = GamePlayers.Count - 1; i >= 0; i--)
-            {
-                GamePlayers[i].StartDetectingCollissions();
-                GamePlayers[i].TargetSetUpGraphics();
-                GamePlayers[i].GameSeconds = gameSeconds;
-                GamePlayers[i].ItemCounter = itemsC;
-                GamePlayers[i].TargetShowUI();
-                GamePlayers[i].TargetEndTransition();
+                gamePlayerInstance.GameSeconds = gameSeconds;
+                gamePlayerInstance.ItemCounter = itemsC;
+                gamePlayerInstance.StartDetectingCollissions();
             }
             startCounting = true;
             StartCoroutine("Counter");
@@ -218,9 +211,10 @@ public class NetworkManagerLostFound : NetworkManager
     {
         int itemsCaught = 0;
         int itemsTotal = 0;
-        foreach(var player in GamePlayers)
+        foreach (var player in GamePlayers)
         {
-            if (player.PlayerType == "ITEM") {
+            if (player.PlayerType == "ITEM")
+            {
                 itemsTotal++;
                 if (player.IsCaught)
                 {
@@ -248,8 +242,8 @@ public class NetworkManagerLostFound : NetworkManager
         StopCoroutine("Counter");
         foreach (var player in GamePlayers)
         {
-            Debug.Log("Notifying");
-            player.TargetGameOver(winner);         
+            player.StopDetectingCollissions();
+            player.TargetGameOver(winner);
 
         }
     }
@@ -260,7 +254,7 @@ public class NetworkManagerLostFound : NetworkManager
         {
             yield return new WaitForSeconds(1f);
             gameSeconds--;
-            foreach(var player in GamePlayers)
+            foreach (var player in GamePlayers)
             {
                 player.GameSeconds = gameSeconds;
             }

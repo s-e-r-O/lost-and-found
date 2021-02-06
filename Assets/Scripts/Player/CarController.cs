@@ -29,7 +29,7 @@ public class CarController : NetworkBehaviour
 
     private void Update()
     {
-        if (isLocalPlayer && CheckIfFallen())
+        if (hasAuthority && CheckIfFallen())
         {
             StartCoroutine(Restaure());
         }
@@ -53,7 +53,7 @@ public class CarController : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (isLocalPlayer)
+        if (hasAuthority)
         {
             float h = -Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
