@@ -17,6 +17,9 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
 
     [SerializeField] private PlayerTagDisplay playerDisplayPrefab;
 
+
+    private bool shouldUpdateUI = false;
+
     [HideInInspector]
     [SyncVar(hook = nameof(HandleDisplayNameChanged))]
     public string DisplayName = "";
@@ -46,13 +49,21 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(PlayerNameInput.DisplayName);
-        lobbyUI.SetActive(true);
+        SetUIActive(true);
+    }
+
+    [ClientCallback]
+    public void SetUIActive(bool isActive)
+    {
+        lobbyUI.SetActive(isActive);
+        shouldUpdateUI = isActive;
     }
 
     public override void OnStartClient()
     {
         Room.RoomPlayers.Add(this);
         UpdateDisplay();
+        DontDestroyOnLoad(gameObject);
     }
 
     public override void OnStopClient()
@@ -80,30 +91,32 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
             }
             return;
         }
-        
-        foreach(TeamButton teamButton in teamButtons)
+        if (shouldUpdateUI)
         {
-            teamButton.SetValues(this);
+            foreach (TeamButton teamButton in teamButtons)
+            {
+                teamButton.SetValues(this);
+            }
+
+
+            foreach (Transform child in playerList.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            for (int i = 0; i < Room.RoomPlayers.Count; i++)
+            {
+                PlayerTagDisplay playerTag = Instantiate(playerDisplayPrefab, playerList.transform);
+                playerTag.SetValues(Room.RoomPlayers[i]);
+            }
+
+
+            bool alreadyChoosed = PlayerType == "FINDER" || PlayerType == "ITEM";
+            waitingPlayersUI.SetActive(alreadyChoosed && (LobbyState == LobbyState.NOT_ENOUGH_PLAYERS || LobbyState == LobbyState.PLAYERS_STILL_CHOOSING));
+            waitingTeamsUI.SetActive(alreadyChoosed && LobbyState == LobbyState.EMPTY_TEAM);
+            waitingHostUI.SetActive(!IsLeader && alreadyChoosed && LobbyState == LobbyState.READY);
+            startGameButton.gameObject.SetActive(IsLeader && alreadyChoosed && LobbyState == LobbyState.READY);
+            startGameButton.interactable = IsLeader && alreadyChoosed && LobbyState == LobbyState.READY;
         }
-
-
-        foreach (Transform child in playerList.transform)
-        {
-            Destroy(child.gameObject);
-        }
-        for (int i = 0; i < Room.RoomPlayers.Count; i++)
-        {
-            PlayerTagDisplay playerTag = Instantiate(playerDisplayPrefab, playerList.transform);
-            playerTag.SetValues(Room.RoomPlayers[i]);
-        }
-
-
-        bool alreadyChoosed = PlayerType == "FINDER" || PlayerType == "ITEM";
-        waitingPlayersUI.SetActive(alreadyChoosed && (LobbyState == LobbyState.NOT_ENOUGH_PLAYERS || LobbyState == LobbyState.PLAYERS_STILL_CHOOSING));
-        waitingTeamsUI.SetActive(alreadyChoosed && LobbyState == LobbyState.EMPTY_TEAM);
-        waitingHostUI.SetActive(!IsLeader && alreadyChoosed && LobbyState == LobbyState.READY);
-        startGameButton.gameObject.SetActive(IsLeader && alreadyChoosed && LobbyState == LobbyState.READY);
-        startGameButton.interactable = IsLeader && alreadyChoosed && LobbyState == LobbyState.READY;
     }
 
     [Command]
@@ -127,8 +140,18 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
 
     public void LeaveGame()
     {
-        //if (Room.RoomPlayers[0].connectionToClient != connectionToClient) { return; }
-
         Room.LeaveGame(isServer);
+    }
+
+    [TargetRpc]
+    public void TargetCloseTransition()
+    {
+        SceneTransition.Instance.Close();
+    }
+
+    [TargetRpc]
+    public void TargetHideUI()
+    {
+        SetUIActive(false);
     }
 }
