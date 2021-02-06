@@ -160,6 +160,7 @@ MonoBehaviour:
   itemCounter: {fileID: 7032404316405078703}
   gameOverUI: {fileID: 73564495266443452}
   foundMessage: {fileID: 7077018462408188827}
+  tagPrefab: {fileID: 2436728546718799220, guid: 0ecb19ab8ea652d42b8a5566eda0b703, type: 3}
   GameSeconds: 0
   ItemCounter: 0
   graphics: {fileID: 1808947103832497094}

@@ -18,6 +18,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [SerializeField] TMP_Text itemCounter;
     [SerializeField] GameOverMenu gameOverUI;
     [SerializeField] TMP_Text foundMessage;
+    [SerializeField] PlayerTagUI tagPrefab;
 
     [SyncVar(hook = nameof(HandleGameSecondsChanged))]
     public int GameSeconds;
@@ -68,15 +69,19 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
         }
         else
         {
+            GameObject tagsParent = GameObject.Find("Tags");
+            var playerTag = Instantiate(tagPrefab, tagsParent.transform);
             var currentType = Room.RoomPlayers.First(r => r.hasAuthority).PlayerType;
             if (PlayerType == currentType)
             {
                 outline.OutlineColor = Color.green;
+                playerTag.Init(transform, displayName, Color.green);
                 SetLayerRecursively(gameObject, 10);
             }
             else
             {
                 outline.OutlineColor = Color.red;
+                playerTag.Init(transform, displayName, Color.red);
                 SetLayerRecursively(gameObject, 9);
             }
         }

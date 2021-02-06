@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d552760d1bd10fe409ef36ee6dd0b5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSteam: 0
+  useSteam: 1
   landingPage: {fileID: 1534087089}
 --- !u!1 &299873834
 GameObject:
@@ -1909,6 +1909,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: managerPrefab
+      value: 
+      objectReference: {fileID: 6403861316140271414, guid: 2cc2a0e64eba3604a8ac303868e77229, type: 3}
     - target: {fileID: 8524424822607248686, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: m_Name
       value: ManagerInitializer
@@ -3821,11 +3825,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5347c213ea89f946be32e942d7ff4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderCamera: {fileID: 0}
+  nonPixelatedCamera: {fileID: 0}
   mode: 0
   targetScreenSize:
     width: 480
     height: 270
   screenScaleFactor: 1
+  ScreenScale: {x: 1, y: 1}
   display: {fileID: 8501886487150905378}
 --- !u!81 &8501886487162202972
 AudioListener:
