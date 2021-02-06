@@ -7,6 +7,11 @@ public class CarController : NetworkBehaviour
 {
 
     [SerializeField]
+    private NetworkGamePlayerLostFound player = null;
+
+    [SerializeField]
+    private float finderSpeedMultiplier = 1.1f;
+    [SerializeField]
     private float acceleration = 1f;
     [SerializeField]
     private float reverseAcceleration = 1f;
@@ -62,13 +67,14 @@ public class CarController : NetworkBehaviour
             //    wheel.rotation = Quaternion.FromToRotation(transform.forward, Quaternion.AngleAxis(-h * 20f, Vector3.up) * transform.forward);
             //}
             //AudioManager.Instance.ModifyPitch("Engine", v / 5f);
+            float multipler = player.PlayerType == "FINDER" ? finderSpeedMultiplier : 1f;
             Vector3 speed = transform.forward * (v * (v > 0f ? acceleration : reverseAcceleration));
             rb.AddForce(speed);
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed * multipler);
 
             float direction = Vector3.Dot(transform.forward, rb.velocity);
 
-            transform.Rotate(transform.up, ((direction >= 0f ? -1 : 1) * h * steering * rb.velocity.magnitude / maxSpeed));
+            transform.Rotate(transform.up, ((direction >= 0f ? -1 : 1) * h * steering * rb.velocity.magnitude / (maxSpeed * multipler)));
         }
     }
 }

@@ -76,6 +76,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  player: {fileID: 889465229587177054}
+  finderSpeedMultiplier: 1.1
   acceleration: 120
   reverseAcceleration: 90
   maxSpeed: 200
