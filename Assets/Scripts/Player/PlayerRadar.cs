@@ -17,7 +17,6 @@ public class PlayerRadar : NetworkBehaviour
 
     private bool readyToSearch = false;
 
-
     private NetworkManagerLostFound room;
     private NetworkManagerLostFound Room
     {
@@ -41,12 +40,40 @@ public class PlayerRadar : NetworkBehaviour
         radarUI.gameObject.SetActive(false);
         arrow.gameObject.SetActive(ShouldUseRadar);
         radarAnim.gameObject.SetActive(ShouldUseRadar);
-        radarUI.gameObject.SetActive(ShouldUseRadar);
-        if (ShouldUseRadar)
+        radarUI.gameObject.SetActive(false);
+        readyToSearch = ShouldUseRadar;
+        //if (ShouldUseRadar)
+        //{
+        //    readyToSearch = true;
+        //    //StartCoroutine(SearchPlayersRoutine());
+        //}
+    }
+
+    private void Update()
+    {
+        if (hasAuthority && ShouldUseRadar)
         {
-            readyToSearch = true;
-            StartCoroutine(SearchPlayersRoutine());
+            if (Input.GetKeyDown(KeyCode.X) && readyToSearch)
+            {
+                readyToSearch = false;
+                StartCoroutine(StartSearchPlayers());
+            }
         }
+    }
+
+    IEnumerator StartSearchPlayers()
+    {
+        Searching();
+        yield return new WaitForSeconds(2f);
+        CmdSearchPlayers();
+    }
+
+    IEnumerator StartCooldown()
+    {
+        radarUI.Cooldown(cooldown);
+        yield return new WaitForSeconds(cooldown);
+        readyToSearch = true;
+        radarUI.gameObject.SetActive(false);
     }
 
     IEnumerator SearchPlayersRoutine()
@@ -110,18 +137,21 @@ public class PlayerRadar : NetworkBehaviour
     {
         radarUI.NotFound();
         yield return new WaitForSeconds(2f);
-        readyToSearch = true;
+        //readyToSearch = true;
+        StartCoroutine(StartCooldown());
     }
 
     IEnumerator HideArrow()
     {
         yield return new WaitForSeconds(arrowDuration);
         arrow.Hide();
-        readyToSearch = true;
+        //readyToSearch = true;
+        StartCoroutine(StartCooldown());
     }
 
     private void Searching()
     {
+        radarUI.gameObject.SetActive(ShouldUseRadar);
         radarUI.Searching();
         radarAnim.ResetTrigger("Search");
         radarAnim.SetTrigger("Search");

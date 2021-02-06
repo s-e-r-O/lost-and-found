@@ -12,6 +12,7 @@ public class NetworkManagerLostFound : NetworkManager
     [SerializeField] private int minPlayers = 2;
     [SerializeField] private string menuScene = string.Empty;
     [SerializeField] private string levelScene = string.Empty;
+    [SerializeField] private float sceneTransitionDelay = 2f;
 
 
     [SerializeField] private int gameDurationSeconds = 60;
@@ -153,8 +154,9 @@ public class NetworkManagerLostFound : NetworkManager
 
     public override void OnClientSceneChanged(NetworkConnection conn)
     {
-        SceneTransition.Instance.Open();
         base.OnClientSceneChanged(conn);
+
+        StartCoroutine(Delay(() => SceneTransition.Instance.Open(), sceneTransitionDelay / 2f));
     }
 
     public override void ServerChangeScene(string newSceneName)
@@ -163,7 +165,7 @@ public class NetworkManagerLostFound : NetworkManager
         //From menu to game
         if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith(levelScene))
         {
-            delay = 1f;
+            delay = sceneTransitionDelay / 2f;
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
 
