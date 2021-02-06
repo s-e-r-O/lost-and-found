@@ -46,6 +46,9 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     public bool IsCaught = false;
 
     [SerializeField] private CinemachineVirtualCamera playerCameraPrefab;
+
+
+    private PlayerTagUI tagUI;
     private CinemachineVirtualCamera playerCamera;
 
     private NetworkManagerLostFound room;
@@ -70,18 +73,18 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
         else
         {
             GameObject tagsParent = GameObject.Find("Tags");
-            var playerTag = Instantiate(tagPrefab, tagsParent.transform);
+            tagUI = Instantiate(tagPrefab, tagsParent.transform);
             var currentType = Room.RoomPlayers.First(r => r.hasAuthority).PlayerType;
             if (PlayerType == currentType)
             {
                 outline.OutlineColor = Color.green;
-                playerTag.Init(transform, displayName, Color.green);
+                tagUI.Init(transform, displayName, Color.green);
                 SetLayerRecursively(gameObject, 10);
             }
             else
             {
                 outline.OutlineColor = Color.red;
-                playerTag.Init(transform, displayName, Color.red);
+                tagUI.Init(transform, displayName, Color.red);
                 SetLayerRecursively(gameObject, 9);
             }
         }
@@ -170,6 +173,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     private void RpcPlayerCaught()
     {
         graphics.SetActive(false);
+        if(tagUI != null)
+        {
+            Destroy(tagUI.gameObject);
+        }
         if (hasAuthority)
         {
             IsCaught = true;

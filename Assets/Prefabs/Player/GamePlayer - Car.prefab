@@ -394,7 +394,7 @@ MonoBehaviour:
   syncInterval: 0.1
   radarUI: {fileID: 1275001712447762028}
   arrow: {fileID: 71141807819392058}
-  cooldown: 10
+  cooldown: 8
   arrowDuration: 8
   range: 60
   radarAnim: {fileID: 1448351601}
@@ -975,7 +975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1926334626088992422
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2217,7 +2217,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6162561325128491203}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -3409,11 +3409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3429,7 +3429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3437,7 +3437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4500479820795347704, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
       propertyPath: m_Pivot.x

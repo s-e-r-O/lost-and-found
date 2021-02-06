@@ -19,7 +19,6 @@ public class RadarUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -47,7 +46,8 @@ public class RadarUI : MonoBehaviour
         text.text = "";
         progressBar.SetActive(true);
         progressBarProgress.fillAmount = 0f;
-        progressBarProgress.DOFillAmount(1f, duration);
+        //DOTween.To(() => progressBarProgress.fillAmount, amount => progressBarProgress.fillAmount = amount, 1f, duration);
+        progressBarProgress.DOFillAmount(1f, duration).SetEase(Ease.Linear);
     }
 
     public void NotFound()
