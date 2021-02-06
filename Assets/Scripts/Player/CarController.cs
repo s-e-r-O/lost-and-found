@@ -77,4 +77,13 @@ public class CarController : NetworkBehaviour
             transform.Rotate(transform.up, ((direction >= 0f ? -1 : 1) * h * steering * rb.velocity.magnitude / (maxSpeed * multipler)));
         }
     }
+
+    private void OnBecameVisible()
+    {
+        Debug.Log("Visible");
+    }
+    private void OnBecameInvisible()
+    {
+        Debug.Log("Invisible");
+    }
 }

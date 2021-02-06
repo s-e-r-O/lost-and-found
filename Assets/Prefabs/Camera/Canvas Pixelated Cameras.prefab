@@ -360,12 +360,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8501886488666283951}
   m_LocalRotation: {x: 0.09904577, y: -0.89239913, z: 0.23911765, w: 0.3696438}
-  m_LocalPosition: {x: 68.6, y: -10, z: -0.8}
+  m_LocalPosition: {x: -8.2, y: -1.51, z: 53.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4404303968457484849}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: -135, z: 0}
 --- !u!20 &8501886488666283949
 Camera:
   m_ObjectHideFlags: 0
@@ -393,11 +393,11 @@ Camera:
   far clip plane: 1000
   field of view: 19
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3863
+    m_Bits: 7959
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -421,6 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5347c213ea89f946be32e942d7ff4eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nonPixelatedCamera: {fileID: 0}
   mode: 0
   targetScreenSize:
     width: 480
@@ -491,7 +492,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

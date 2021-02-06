@@ -17,7 +17,9 @@ public class PixelatedCamera : MonoBehaviour
 
     public static PixelatedCamera main;
 
-    private Camera renderCamera;
+    [HideInInspector]
+    public Camera renderCamera;
+    [SerializeField] private Camera nonPixelatedCamera;
     private RenderTexture renderTexture;
     private int screenWidth, screenHeight;
 
@@ -26,6 +28,7 @@ public class PixelatedCamera : MonoBehaviour
     public ScreenSize targetScreenSize = new ScreenSize { width = 256, height = 144 };  // Only used with PixelScreenMode.Resize
     public uint screenScaleFactor = 1;  // Only used with PixelScreenMode.Scale
 
+    public Vector2 ScreenScale = Vector2.one;
 
     [Header("Display")]
     public RawImage display;
@@ -67,6 +70,8 @@ public class PixelatedCamera : MonoBehaviour
         int width = mode == PixelScreenMode.Resize ? (int)targetScreenSize.width : screenWidth / (int)screenScaleFactor;
         int height = mode == PixelScreenMode.Resize ? (int)targetScreenSize.height : screenHeight / (int)screenScaleFactor;
 
+        ScreenScale = new Vector2(width / (float)screenWidth, height / (float)screenHeight);
+
         // Initialize the render texture
         renderTexture = new RenderTexture(width, height, 24)
         {
@@ -76,6 +81,11 @@ public class PixelatedCamera : MonoBehaviour
 
         // Set the render texture as the camera's output
         renderCamera.targetTexture = renderTexture;
+
+        if (nonPixelatedCamera != null)
+        {
+            nonPixelatedCamera.targetTexture = renderTexture;
+        }
 
         // Attaching texture to the display UI RawImage
         display.texture = renderTexture;
