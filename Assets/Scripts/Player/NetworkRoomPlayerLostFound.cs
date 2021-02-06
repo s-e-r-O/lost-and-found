@@ -48,7 +48,7 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        CmdSetDisplayName(PlayerNameInput.DisplayName);
+        CmdSetDisplayName(PlayerPrefs.GetString("PlayerName", ""));
         SetUIActive(true);
     }
 
