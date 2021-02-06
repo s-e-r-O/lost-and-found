@@ -31,6 +31,9 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     [SyncVar]
     private string displayName = "";
 
+    [SyncVar]
+    private bool isLeader = false;
+
     [SyncVar(hook = nameof(HandlePlayerTypeChanged))]
     public string PlayerType;
 
@@ -103,9 +106,10 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     }
 
     [Server]
-    public void SetPlayerValues(string name, string type)
+    public void SetPlayerValues(string name, string type, bool isLeader)
     {
         displayName = name;
+        this.isLeader = isLeader;
         PlayerType = type;
     }
 
@@ -224,7 +228,7 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
     public void TargetGameOver(string winner)
     {
         gameOverUI.gameObject.SetActive(true);
-        gameOverUI.SetWinner(winner);
+        gameOverUI.SetWinner(winner, isLeader);
     }
 
 

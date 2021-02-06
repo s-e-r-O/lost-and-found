@@ -194,7 +194,7 @@ public class NetworkManagerLostFound : NetworkManager
                 int index = Random.Range(0, gamePlayerPrefabs.Length);
                 var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index], position, Quaternion.identity);
                 NetworkServer.Spawn(gamePlayerInstance.gameObject, conn);
-                gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType);
+                gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType, RoomPlayers[i].IsLeader);
                 gamePlayerInstance.GameSeconds = gameSeconds;
                 gamePlayerInstance.ItemCounter = itemsC;
                 gamePlayerInstance.StartDetectingCollissions();
@@ -263,5 +263,12 @@ public class NetworkManagerLostFound : NetworkManager
         {
             CheckGameState();
         }
+    }
+
+
+
+    public void PlayAgain()
+    {
+        Debug.Log("Play Again");
     }
 }

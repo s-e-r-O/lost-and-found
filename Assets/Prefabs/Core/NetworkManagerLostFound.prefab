@@ -71,7 +71,7 @@ MonoBehaviour:
   minPlayers: 2
   menuScene: Main Menu
   levelScene: Level
-  gameDurationSeconds: 120
+  gameDurationSeconds: 5
   roomPlayerPrefab: {fileID: -2397984927510013244, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
   gamePlayerPrefabs:
   - {fileID: 889465229587177054, guid: 03af096aaf79b9743b39bab4de15e438, type: 3}
