@@ -60,6 +60,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
+        Debug.Log(conn.connectionId);
         if (SceneManager.GetActiveScene().name == menuScene)
         {
             bool isLeader = RoomPlayers.Count == 0;
@@ -173,6 +174,20 @@ public class NetworkManagerLostFound : NetworkManager
                 RoomPlayers[i].TargetCloseTransition();
                 RoomPlayers[i].TargetHideUI();
             }
+        } 
+        else
+        {
+            delay = sceneTransitionDelay / 2f;
+            for(int i = GamePlayers.Count - 1; i >= 0; i--)
+            {
+                NetworkServer.Destroy(GamePlayers[i].gameObject);
+            }
+            for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            {
+                var conn = RoomPlayers[i].connectionToClient;
+                RoomPlayers[i].TargetCloseTransition();
+                //RoomPlayers[i].TargetShowUI();
+            }
         }
         StartCoroutine(Delay(() => base.ServerChangeScene(newSceneName), delay));
     }
@@ -203,7 +218,13 @@ public class NetworkManagerLostFound : NetworkManager
             }
             startCounting = true;
             StartCoroutine("Counter");
-
+        } 
+        else
+        {
+            for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            {
+                RoomPlayers[i].TargetShowUI();
+            }
         }
         base.OnServerSceneChanged(sceneName);
     }
@@ -271,6 +292,6 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void PlayAgain()
     {
-        Debug.Log("Play Again");
+        ServerChangeScene(menuScene);
     }
 }

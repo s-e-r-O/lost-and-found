@@ -53,7 +53,7 @@ MonoBehaviour:
   onlineScene: 
   transport: {fileID: 770075710722949476}
   networkAddress: localhost
-  maxConnections: 8
+  maxConnections: 10
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
@@ -71,6 +71,7 @@ MonoBehaviour:
   minPlayers: 2
   menuScene: Main Menu
   levelScene: Level
+  sceneTransitionDelay: 2
   gameDurationSeconds: 120
   roomPlayerPrefab: {fileID: -2397984927510013244, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}
   gamePlayerPrefabs:
