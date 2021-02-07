@@ -562,7 +562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: FIND ALL OF THE ITEMS BEFORE THE TIME RUNS OUT
+  m_text: FIND ALL OF THE ITEMS BEFORE TIME RUNS OUT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bc26f46900a77a149bf9b46b06e05d09, type: 2}
   m_sharedMaterial: {fileID: 6377472102684235537, guid: bc26f46900a77a149bf9b46b06e05d09, type: 2}

@@ -2417,7 +2417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7871724990774632699, guid: 2494d0c4e02fe73429c0bde5bdf1c070, type: 3}
       propertyPath: m_text
-      value: DON'T LET ANY FINDER TO SE YOU BEFORE THE TIME RUNS OUT
+      value: DON'T LET ANY FINDER SEE YOU BEFORE TIME RUNS OUT
       objectReference: {fileID: 0}
     - target: {fileID: 9042735369320744265, guid: 2494d0c4e02fe73429c0bde5bdf1c070, type: 3}
       propertyPath: roomPlayer
