@@ -60,7 +60,11 @@ public class NetworkGamePlayerLostFound : NetworkBehaviour
             return room = NetworkManager.singleton as NetworkManagerLostFound;
         }
     }
-
+    //public override void OnStartServer()
+    //{
+    //    DontDestroyOnLoad(gameObject);
+    //    Room.GamePlayers.Add(this);
+    //}
     public override void OnStartClient()
     {
         DontDestroyOnLoad(gameObject);

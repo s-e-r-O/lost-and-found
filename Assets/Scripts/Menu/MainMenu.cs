@@ -28,6 +28,10 @@ public class MainMenu : MonoBehaviour
 
         AudioManager.Instance.ChangeBackgroundMusic("Menu");
 
+        if (room != null && room.isNetworkActive)
+        {
+            return;
+        }
         if (!useSteam) { return; }
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);

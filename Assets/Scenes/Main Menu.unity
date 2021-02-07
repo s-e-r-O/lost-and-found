@@ -1910,9 +1910,45 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: managerPrefab
       value: 
-      objectReference: {fileID: 6403861316140271414, guid: 2cc2a0e64eba3604a8ac303868e77229, type: 3}
+      objectReference: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: mainMenu
+      value: 
+      objectReference: {fileID: 262807678}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1534087089}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
+      propertyPath: onDisconnected.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8524424822607248686, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: m_Name
       value: ManagerInitializer

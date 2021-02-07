@@ -58,7 +58,11 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
         lobbyUI.SetActive(isActive);
         shouldUpdateUI = isActive;
     }
-
+    //public override void OnStartServer()
+    //{
+    //    Room.RoomPlayers.Add(this);
+    //    DontDestroyOnLoad(gameObject);
+    //}
     public override void OnStartClient()
     {
         Room.RoomPlayers.Add(this);
@@ -153,5 +157,10 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     public void TargetHideUI()
     {
         SetUIActive(false);
+    }
+    [TargetRpc]
+    public void TargetShowUI()
+    {
+        SetUIActive(true);
     }
 }
