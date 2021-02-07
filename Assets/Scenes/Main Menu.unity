@@ -1916,7 +1916,7 @@ PrefabInstance:
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: managerPrefab
       value: 
-      objectReference: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
+      objectReference: {fileID: 6403861316140271414, guid: 2cc2a0e64eba3604a8ac303868e77229, type: 3}
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: mainMenu
       value: 
