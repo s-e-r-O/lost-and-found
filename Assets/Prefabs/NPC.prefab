@@ -2442,7 +2442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4360235441301587921}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -21, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2170709172223697580}
@@ -2523,6 +2523,7 @@ MonoBehaviour:
   syncInterval: 0.1
   walkRadius: 20
   anim: {fileID: 156200582282683111}
+  randomDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &1901166590325925489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,6 +2538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  parent: {fileID: 0}
   hair: {fileID: 2168449945766615174}
   characters:
   - {fileID: 2167846580869728934}
@@ -2545,10 +2547,10 @@ MonoBehaviour:
   - {fileID: 2167789641460840212}
   - {fileID: 2168114114438297892}
   - {fileID: 2167838104762298564}
-  modelIndex: 0
-  color: {r: 0, g: 0, b: 0, a: 0}
-  hasHair: 0
-  size: 0
+  ModelIndex: 0
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  HasHair: 0
+  Size: 0
 --- !u!95 &156200582282683111
 Animator:
   serializedVersion: 3

@@ -69,8 +69,8 @@ MonoBehaviour:
   - {fileID: 5536720855566244848, guid: 8c502866cfd300b4499eadbdb01af418, type: 3}
   - {fileID: 4230209067060063265, guid: ce3b6d2f42b21674db663aa4d19c37bd, type: 3}
   minPlayers: 2
-  menuScene: Main Menu
-  levelScene: Level
+  menuScene: Assets/Scenes/Main Menu.unity
+  levelScene: Assets/Scenes/Level.unity
   sceneTransitionDelay: 2
   gameDurationSeconds: 120
   roomPlayerPrefab: {fileID: -2397984927510013244, guid: b2e3fa6fb01e1974e83d800fb45bd6a6, type: 3}

@@ -10,8 +10,8 @@ using Random = UnityEngine.Random;
 public class NetworkManagerLostFound : NetworkManager
 {
     [SerializeField] private int minPlayers = 2;
-    [SerializeField] private string menuScene = string.Empty;
-    [SerializeField] private string levelScene = string.Empty;
+    [Scene][SerializeField] private string menuScene = string.Empty;
+    [Scene][SerializeField] private string levelScene = string.Empty;
     [SerializeField] private float sceneTransitionDelay = 2f;
 
 
@@ -32,6 +32,8 @@ public class NetworkManagerLostFound : NetworkManager
     public List<NetworkGamePlayerLostFound> GamePlayers { get; } = new List<NetworkGamePlayerLostFound>();
 
 
+    private bool isChangingScene = false;
+
     public override void OnClientConnect(NetworkConnection conn)
     {
         base.OnClientConnect(conn);
@@ -51,7 +53,7 @@ public class NetworkManagerLostFound : NetworkManager
             conn.Disconnect();
             return;
         }
-        if (SceneManager.GetActiveScene().name != menuScene)
+        if (networkSceneName != menuScene)
         {
             conn.Disconnect();
             return;
@@ -61,7 +63,7 @@ public class NetworkManagerLostFound : NetworkManager
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         Debug.Log(conn.connectionId);
-        if (SceneManager.GetActiveScene().name == menuScene)
+        if (networkSceneName == menuScene)
         {
             bool isLeader = RoomPlayers.Count == 0;
             NetworkRoomPlayerLostFound roomPlayerInstance = Instantiate(roomPlayerPrefab);
@@ -118,7 +120,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void StartGame()
     {
-        if (SceneManager.GetActiveScene().name == menuScene)
+        if (networkSceneName == menuScene)
         {
             if (IsReadyToStart() != LobbyState.READY) { return; }
             ServerChangeScene(levelScene);
@@ -157,14 +159,17 @@ public class NetworkManagerLostFound : NetworkManager
     {
         base.OnClientSceneChanged(conn);
 
-        StartCoroutine(Delay(() => SceneTransition.Instance.Open(), sceneTransitionDelay / 2f));
+        StartCoroutine(Delay(() => { SceneTransition.Instance.Open();
+            isChangingScene = false;
+        }, sceneTransitionDelay / 2f));
     }
 
     public override void ServerChangeScene(string newSceneName)
     {
+        if (isChangingScene) { return; }
         float delay = 0f;
         //From menu to game
-        if (SceneManager.GetActiveScene().name == menuScene && newSceneName.StartsWith(levelScene))
+        if (networkSceneName == menuScene && newSceneName.StartsWith(levelScene))
         {
             delay = sceneTransitionDelay / 2f;
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
@@ -178,18 +183,25 @@ public class NetworkManagerLostFound : NetworkManager
         else
         {
             delay = sceneTransitionDelay / 2f;
-            for(int i = GamePlayers.Count - 1; i >= 0; i--)
-            {
-                NetworkServer.Destroy(GamePlayers[i].gameObject);
-            }
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
                 var conn = RoomPlayers[i].connectionToClient;
                 RoomPlayers[i].TargetCloseTransition();
-                //RoomPlayers[i].TargetShowUI();
             }
+            StartCoroutine(Delay(() => { 
+                for(int i = GamePlayers.Count - 1; i >= 0; i--)
+                {
+                    NetworkServer.Destroy(GamePlayers[i].gameObject);
+                }                
+                base.ServerChangeScene(newSceneName);
+                isChangingScene = true;
+            }, delay));
+                
+            return;
         }
-        StartCoroutine(Delay(() => base.ServerChangeScene(newSceneName), delay));
+        StartCoroutine(Delay(() => { base.ServerChangeScene(newSceneName);
+            isChangingScene = true;
+        }, delay));
     }
 
     public override void OnServerSceneChanged(string sceneName)
@@ -227,6 +239,7 @@ public class NetworkManagerLostFound : NetworkManager
             }
         }
         base.OnServerSceneChanged(sceneName);
+        isChangingScene = false;
     }
 
 
@@ -292,6 +305,9 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void PlayAgain()
     {
-        ServerChangeScene(menuScene);
+        if (networkSceneName == levelScene)
+        {
+            ServerChangeScene(menuScene);
+        }
     }
 }

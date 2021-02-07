@@ -162,5 +162,6 @@ public class NetworkRoomPlayerLostFound : NetworkBehaviour
     public void TargetShowUI()
     {
         SetUIActive(true);
+        UpdateDisplay();
     }
 }

@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d552760d1bd10fe409ef36ee6dd0b5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSteam: 1
+  useSteam: 0
   landingPage: {fileID: 1534087089}
 --- !u!1 &299873834
 GameObject:
@@ -1916,7 +1916,7 @@ PrefabInstance:
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: managerPrefab
       value: 
-      objectReference: {fileID: 6403861316140271414, guid: 2cc2a0e64eba3604a8ac303868e77229, type: 3}
+      objectReference: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: mainMenu
       value: 
