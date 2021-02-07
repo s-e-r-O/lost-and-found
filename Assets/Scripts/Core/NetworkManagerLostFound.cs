@@ -32,7 +32,7 @@ public class NetworkManagerLostFound : NetworkManager
     public List<NetworkGamePlayerLostFound> GamePlayers { get; } = new List<NetworkGamePlayerLostFound>();
 
 
-    private bool isChangingScene = false;
+    private List<Transform> alreadyUsedPositions = new List<Transform>();
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -53,7 +53,7 @@ public class NetworkManagerLostFound : NetworkManager
             conn.Disconnect();
             return;
         }
-        if (networkSceneName != menuScene)
+        if (!IsSceneActive(menuScene))
         {
             conn.Disconnect();
             return;
@@ -62,8 +62,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        Debug.Log(conn.connectionId);
-        if (networkSceneName == menuScene)
+        if (IsSceneActive(menuScene))
         {
             bool isLeader = RoomPlayers.Count == 0;
             NetworkRoomPlayerLostFound roomPlayerInstance = Instantiate(roomPlayerPrefab);
@@ -120,7 +119,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void StartGame()
     {
-        if (networkSceneName == menuScene)
+        if (IsSceneActive(menuScene))
         {
             if (IsReadyToStart() != LobbyState.READY) { return; }
             ServerChangeScene(levelScene);
@@ -160,16 +159,14 @@ public class NetworkManagerLostFound : NetworkManager
         base.OnClientSceneChanged(conn);
 
         StartCoroutine(Delay(() => { SceneTransition.Instance.Open();
-            isChangingScene = false;
         }, sceneTransitionDelay / 2f));
     }
 
     public override void ServerChangeScene(string newSceneName)
     {
-        if (isChangingScene) { return; }
         float delay = 0f;
         //From menu to game
-        if (networkSceneName == menuScene && newSceneName.StartsWith(levelScene))
+        if (IsSceneActive(menuScene) && newSceneName.StartsWith(levelScene))
         {
             delay = sceneTransitionDelay / 2f;
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
@@ -194,13 +191,11 @@ public class NetworkManagerLostFound : NetworkManager
                     NetworkServer.Destroy(GamePlayers[i].gameObject);
                 }                
                 base.ServerChangeScene(newSceneName);
-                isChangingScene = true;
             }, delay));
                 
             return;
         }
         StartCoroutine(Delay(() => { base.ServerChangeScene(newSceneName);
-            isChangingScene = true;
         }, delay));
     }
 
@@ -210,18 +205,13 @@ public class NetworkManagerLostFound : NetworkManager
         {
             gameSeconds = gameDurationSeconds;
             int itemsC = RoomPlayers.Where(g => g.PlayerType == "ITEM").Count();
-            List<Vector3> alreadyPosition = new List<Vector3>();
+            alreadyUsedPositions.Clear();
             for (int i = RoomPlayers.Count - 1; i >= 0; i--)
             {
                 var conn = RoomPlayers[i].connectionToClient;
-                var position = GetStartPosition().position;
-                while (alreadyPosition.Contains(position))
-                {
-                    position = GetStartPosition().position;
-                }
-                alreadyPosition.Add(position);
                 int index = Random.Range(0, gamePlayerPrefabs.Length);
-                var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index], position, Quaternion.identity);
+                var start = GetStartPositionByType(RoomPlayers[i].PlayerType);
+                var gamePlayerInstance = Instantiate(gamePlayerPrefabs[index], start.position, start.rotation);
                 NetworkServer.Spawn(gamePlayerInstance.gameObject, conn);
                 gamePlayerInstance.SetPlayerValues(RoomPlayers[i].DisplayName, RoomPlayers[i].PlayerType, RoomPlayers[i].IsLeader);
                 gamePlayerInstance.GameSeconds = gameSeconds;
@@ -239,9 +229,33 @@ public class NetworkManagerLostFound : NetworkManager
             }
         }
         base.OnServerSceneChanged(sceneName);
-        isChangingScene = false;
     }
 
+
+    private Transform GetStartPositionByType(string playerType)
+    {
+        var tagToCompare = playerType == "FINDER" ? "FinderStartPosition" : "ItemStartPosition";
+            var positions = startPositions.Where(t => t.CompareTag(tagToCompare)).ToList();
+            if (positions.Count == 0)
+            {
+                Debug.LogWarning($"No {playerType} starting positions exist. Using Network Manager default behavior");
+                return GetStartPosition();
+            }
+            var alreadyUsed = alreadyUsedPositions.Where(t => t.CompareTag(tagToCompare)).ToList();
+            
+            if (alreadyUsed.Count >= positions.Count)
+            {
+                Debug.LogWarning($"No available {playerType} starting positions left, using the first one");
+                return positions.ElementAt(0);
+            }
+            var position = positions[Random.Range(0, positions.Count)];
+            while (alreadyUsed.Contains(position))
+            {
+                position = positions[Random.Range(0, positions.Count)];
+            }
+            alreadyUsedPositions.Add(position);
+            return position;
+    }
 
     public void CheckGameState()
     {
@@ -305,7 +319,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public void PlayAgain()
     {
-        if (networkSceneName == levelScene)
+        if (IsSceneActive(levelScene))
         {
             ServerChangeScene(menuScene);
         }
