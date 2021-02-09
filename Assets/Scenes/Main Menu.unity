@@ -411,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d552760d1bd10fe409ef36ee6dd0b5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSteam: 1
+  useSteam: 0
   landingPage: {fileID: 1534087089}
 --- !u!1 &299873834
 GameObject:
@@ -440,16 +440,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 299873834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &299873836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1709293132}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &299873837
@@ -1916,7 +1924,7 @@ PrefabInstance:
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: managerPrefab
       value: 
-      objectReference: {fileID: 6403861316140271414, guid: 2cc2a0e64eba3604a8ac303868e77229, type: 3}
+      objectReference: {fileID: 2123164241965306908, guid: b9bc61274162fdf4196dc0f95302717a, type: 3}
     - target: {fileID: 8524424822607248657, guid: b5dedb22f01adf04a918d461bc277658, type: 3}
       propertyPath: mainMenu
       value: 
@@ -2229,6 +2237,11 @@ MonoBehaviour:
   disabledButtons:
   - {fileID: 994541238}
   - {fileID: 98913650}
+--- !u!1 &1709293132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4500479820795347705, guid: ca78b134a5276d34fa9e2956c2c2f9c2, type: 3}
+  m_PrefabInstance: {fileID: 4500479819735881323}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1748146252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4146,10 +4159,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7278937224310052185, guid: e67baeb646643434cba6b9f81918fb7b, type: 3}
-      propertyPath: radius
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 7278937224310052186, guid: e67baeb646643434cba6b9f81918fb7b, type: 3}
       propertyPath: m_Name
       value: NPC Spawner Offline

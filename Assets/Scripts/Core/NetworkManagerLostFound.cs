@@ -145,6 +145,7 @@ public class NetworkManagerLostFound : NetworkManager
 
     public override void OnClientChangeScene(string newSceneName, SceneOperation sceneOperation, bool customHandling)
     {
+        Debug.Log("Hello");
         base.OnClientChangeScene(newSceneName, sceneOperation, customHandling);
     }
 

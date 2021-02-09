@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPrefab: {fileID: 4888049213171816967, guid: b6f635a15891ebd4a85e16868363b04a, type: 3}
   npcTotal: 20
-  radius: 20
+  radius: 15

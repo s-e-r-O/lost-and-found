@@ -1,4 +1,4 @@
-﻿using Mirror;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,22 +42,15 @@ public class PlayerRadar : NetworkBehaviour
         radarAnim.gameObject.SetActive(ShouldUseRadar);
         radarUI.gameObject.SetActive(false);
         readyToSearch = ShouldUseRadar;
-        //if (ShouldUseRadar)
-        //{
-        //    readyToSearch = true;
-        //    //StartCoroutine(SearchPlayersRoutine());
-        //}
     }
 
-    private void Update()
+    void OnRadar()
     {
-        if (hasAuthority && ShouldUseRadar)
+        if (hasAuthority && ShouldUseRadar && readyToSearch)
         {
-            if (Input.GetKeyDown(KeyCode.X) && readyToSearch)
-            {
-                readyToSearch = false;
-                StartCoroutine(StartSearchPlayers());
-            }
+            readyToSearch = false;
+            StartCoroutine(StartSearchPlayers());
+
         }
     }
 
