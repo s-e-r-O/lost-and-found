@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
@@ -28,12 +29,19 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private CarWheel[] rearWheels;
 
+    [Header("Audio")]
+    [SerializeField] private float pitchScale = 5f;
+    [SerializeField] private float pitchBase = 0.1f;
+    [SerializeField] private float pitchTime = 0.5f;
+
     private Vector2 move = Vector2.zero;
     private float accelerate = 0f;
     private float rotate = 0f;
     private bool isDrifting = false;
 
     private Rigidbody rb;
+
+    [SerializeField] private AudioSource engineSound = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +52,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        engineSound.pitch = Mathf.Lerp(engineSound.pitch, Mathf.Abs(accelerate) / pitchScale + pitchBase, pitchTime * Time.deltaTime);
         if (CheckIfFallen())
         {
             StartCoroutine(Restaure());
@@ -65,6 +74,7 @@ public class CarController : MonoBehaviour
             transform.rotation = Quaternion.Euler(transform.rotation.x, 0f, transform.rotation.z);
         }
     }
+
 
     void FixedUpdate()
     {

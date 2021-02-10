@@ -509,6 +509,107 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.3542058, y: 1.7494667, z: 5.1546535}
   m_Center: {x: 0, y: 1.6197954, z: 0.07888883}
+--- !u!1 &1164743327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3714902948963541932, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
+  m_PrefabInstance: {fileID: 1563580088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1164743333
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164743327}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b049660b860c8334a852b54855bce599, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.05
+  m_Pitch: 0
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1200467061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,6 +1119,22 @@ PrefabInstance:
       propertyPath: rearWheels.Array.data[3]
       value: 
       objectReference: {fileID: 1772428736}
+    - target: {fileID: 5768309763990188633, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
+      propertyPath: engineSound
+      value: 
+      objectReference: {fileID: 1164743333}
+    - target: {fileID: 5768309763990188633, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
+      propertyPath: pitchBase
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768309763990188633, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
+      propertyPath: pitchScale
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768309763990188633, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
+      propertyPath: pitchTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5854463457194323949, guid: 89618701d449a5446be21c0d6849f4f3, type: 3}
       propertyPath: m_Name
       value: Wheel_FR
@@ -1161,6 +1278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: -0.07
   radius: 0.02
+  steeringForceTrailTreshold: 0.5
   rideable:
     serializedVersion: 2
     m_Bits: 5943
@@ -1395,6 +1513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: -0.07
   radius: 0.02
+  steeringForceTrailTreshold: 0.5
   rideable:
     serializedVersion: 2
     m_Bits: 5943
