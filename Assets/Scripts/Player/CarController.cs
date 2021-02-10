@@ -73,32 +73,35 @@ public class CarController : MonoBehaviour
         float h = -move.x;
         float vRotate = rotate;
         float v = accelerate;
+
         //foreach(var wheel in wheels)
         //{
         //    wheel.rotation = Quaternion.FromToRotation(transform.forward, Quaternion.AngleAxis(-h * 20f, Vector3.up) * transform.forward);
         //}
         //AudioManager.Instance.ModifyPitch("Engine", v / 5f);
         // float multipler = player.PlayerType == "FINDER" ? finderSpeedMultiplier : 1f;
-        const float multiplier = 1f;
         Vector3 speed = transform.forward * (v * (v > 0f ? acceleration : reverseAcceleration));
-        var grounded = onGround();
+        var grounded = OnGround();
         rb.drag = grounded ? 1f : 0.3f;
+
         if (grounded)
         {
             rb.AddForce(speed);
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed * multiplier);
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
 
             float direction = Vector3.Dot(transform.forward, rb.velocity);
 
-            rb.AddTorque(transform.up * ((direction >= 0f ? -1 : 1) * h * (isDrifting ? driftSteering : steering) * (rb.velocity.magnitude / (maxSpeed * multiplier))), ForceMode.VelocityChange);
+            float steeringForce = (direction >= 0f ? -1 : 1) * h * (isDrifting ? driftSteering : steering) * (rb.velocity.magnitude / (maxSpeed));
+            rb.AddTorque(transform.up * steeringForce, ForceMode.VelocityChange);
+                foreach(var wheel in rearWheels)
+                {
+                    wheel.SetSteeringForce(isDrifting? steeringForce : 0f);
+                }
         }
         else
         {
-            Debug.Log(transform.up);
             rb.AddTorque(transform.up * -h * steeringAir, ForceMode.VelocityChange);
             rb.AddTorque(transform.right * -vRotate * steeringVerticalAir, ForceMode.VelocityChange);
-            // transform.Rotate(transform.up, -h * steeringAir, Space.World);
-            // transform.Rotate(transform.right, -v * steeringAir, Space.World);
         }
     }
 
@@ -114,21 +117,19 @@ public class CarController : MonoBehaviour
     public void OnRotate(InputValue value)
     {
         rotate = value.Get<float>();
-        Debug.Log(rotate);
     }
 
     public void OnJump()
     {
-        if (onGround())
+        if (OnGround())
         {
             rb.AddForce(transform.up * jump, ForceMode.VelocityChange);
-
         }
     }
 
-    private bool onGround()
+    private bool OnGround()
     {
-        return rearWheels.All(w => w.isOnGround());
+        return rearWheels.Any(w => w.IsOnGround());
     }
 
     public void OnDrift(InputValue value)
