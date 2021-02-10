@@ -30,6 +30,7 @@ public class CarController : MonoBehaviour
 
     private Vector2 move = Vector2.zero;
     private float accelerate = 0f;
+    private float rotate = 0f;
     private bool isDrifting = false;
 
     private Rigidbody rb;
@@ -70,7 +71,7 @@ public class CarController : MonoBehaviour
         // float h = -Input.GetAxis("Horizontal");
         // float v = Input.GetAxis("Vertical");
         float h = -move.x;
-        float vRotate = -move.y;
+        float vRotate = rotate;
         float v = accelerate;
         //foreach(var wheel in wheels)
         //{
@@ -95,35 +96,28 @@ public class CarController : MonoBehaviour
         {
             Debug.Log(transform.up);
             rb.AddTorque(transform.up * -h * steeringAir, ForceMode.VelocityChange);
-            if (isDrifting)
-            {
-                rb.AddTorque(transform.right * -vRotate * steeringVerticalAir, ForceMode.VelocityChange);
-
-            }
+            rb.AddTorque(transform.right * -vRotate * steeringVerticalAir, ForceMode.VelocityChange);
             // transform.Rotate(transform.up, -h * steeringAir, Space.World);
             // transform.Rotate(transform.right, -v * steeringAir, Space.World);
         }
     }
 
-    private void OnBecameVisible()
-    {
-        Debug.Log("Visible");
-    }
-    private void OnBecameInvisible()
-    {
-        Debug.Log("Invisible");
-    }
-
-    void OnMove(InputValue value)
+    public void OnMove(InputValue value)
     {
         move = value.Get<Vector2>();
     }
 
-    void OnAccelerate(InputValue value)
+    public void OnAccelerate(InputValue value)
     {
         accelerate = value.Get<float>();
     }
-    void OnJump()
+    public void OnRotate(InputValue value)
+    {
+        rotate = value.Get<float>();
+        Debug.Log(rotate);
+    }
+
+    public void OnJump()
     {
         if (onGround())
         {
@@ -137,7 +131,7 @@ public class CarController : MonoBehaviour
         return rearWheels.All(w => w.isOnGround());
     }
 
-    void OnDrift(InputValue value)
+    public void OnDrift(InputValue value)
     {
         isDrifting = value.Get<float>() != 0f;
     }
