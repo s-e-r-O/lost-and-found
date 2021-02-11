@@ -29,6 +29,8 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private CarWheel[] rearWheels;
 
+    [SerializeField] private ParticleSystem dust;
+
     [Header("Audio")]
     [SerializeField] private float pitchScale = 5f;
     [SerializeField] private float pitchBase = 0.1f;
@@ -56,6 +58,9 @@ public class CarController : MonoBehaviour
         if (CheckIfFallen())
         {
             StartCoroutine(Restaure());
+        } else
+        {
+            StopCoroutine(Restaure());
         }
     }
 
@@ -134,6 +139,7 @@ public class CarController : MonoBehaviour
         if (OnGround())
         {
             rb.AddForce(transform.up * jump, ForceMode.VelocityChange);
+            dust.Play();
         }
     }
 
