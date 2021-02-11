@@ -54,14 +54,22 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
-        engineSound.pitch = Mathf.Lerp(engineSound.pitch, Mathf.Abs(accelerate) / pitchScale + pitchBase, pitchTime * Time.deltaTime);
-        if (CheckIfFallen())
+        if (OnGround())
         {
-            StartCoroutine(Restaure());
-        } else
-        {
-            StopCoroutine(Restaure());
+            engineSound.pitch = Mathf.Lerp(engineSound.pitch, Mathf.Abs(accelerate) / pitchScale + pitchBase, pitchTime * Time.deltaTime);
         }
+        else
+        {
+            engineSound.pitch = Mathf.Lerp(engineSound.pitch, pitchBase / 2f, 2f * pitchTime * Time.deltaTime);
+        }
+
+        //if (CheckIfFallen())
+        //{
+        //    StartCoroutine(Restaure());
+        //} else
+        //{
+        //    StopCoroutine(Restaure());
+        //}
     }
 
     private bool CheckIfFallen()
@@ -116,7 +124,7 @@ public class CarController : MonoBehaviour
         else
         {
             rb.AddTorque(transform.up * -h * steeringAir, ForceMode.VelocityChange);
-            rb.AddTorque(transform.right * -vRotate * steeringVerticalAir, ForceMode.VelocityChange);
+            rb.AddTorque(transform.right * vRotate * steeringVerticalAir, ForceMode.VelocityChange);
         }
     }
 
