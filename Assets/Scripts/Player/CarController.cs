@@ -26,8 +26,7 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private float jump = 1f;
 
-    [SerializeField]
-    private CarWheel[] rearWheels;
+    private CarWheel[] carWheels;
 
     [SerializeField] private ParticleSystem dust;
 
@@ -45,9 +44,10 @@ public class CarController : MonoBehaviour
 
     [SerializeField] private AudioSource engineSound = null;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        carWheels = GetComponentsInChildren<CarWheel>();
         //GameManager.Instance.gameOver.AddListener(() => isOver = true);
         //AudioManager.Instance.Play("Engine", true);
     }
@@ -116,13 +116,17 @@ public class CarController : MonoBehaviour
 
             float steeringForce = (direction >= 0f ? -1 : 1) * h * (isDrifting ? driftSteering : steering) * (rb.velocity.magnitude / (maxSpeed));
             rb.AddTorque(transform.up * steeringForce, ForceMode.VelocityChange);
-                foreach(var wheel in rearWheels)
-                {
-                    wheel.SetSteeringForce(isDrifting? steeringForce : 0f);
-                }
+            foreach(var wheel in carWheels)
+            {
+                wheel.WheelSteeringHandler.SetSteeringValues(h, steeringForce, isDrifting);
+            }
         }
         else
         {
+            foreach (var wheel in carWheels)
+            {
+                wheel.WheelSteeringHandler.SetSteeringValues(h, h, isDrifting);
+            }
             rb.AddTorque(transform.up * -h * steeringAir, ForceMode.VelocityChange);
             rb.AddTorque(transform.right * vRotate * steeringVerticalAir, ForceMode.VelocityChange);
         }
@@ -153,7 +157,7 @@ public class CarController : MonoBehaviour
 
     private bool OnGround()
     {
-        return rearWheels.Any(w => w.IsOnGround());
+        return carWheels.Any(w => w.WheelGroundChecker.OnGround);
     }
 
     public void OnDrift(InputValue value)

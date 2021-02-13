@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CarWheel : MonoBehaviour
 {
@@ -9,39 +7,36 @@ public class CarWheel : MonoBehaviour
     [SerializeField] float radius = 0f;
     [SerializeField] float steeringForceTrailTreshold = 0.5f;
     [SerializeField] LayerMask rideable = 0;
-
-    [HideInInspector] public WheelCollider wheelCollider = null;
+    [SerializeField] bool shouldRotate = false;
 
     private TrailRenderer tr = null;
 
-    private bool isOnGround = false;
-    private float steeringForce = 0f;
+    public CarWheelGroundChecker WheelGroundChecker { get; private set; }
+    public CarWheelSteeringHandler WheelSteeringHandler{ get; private set; }
+    public CarWheelFX WheelEffects { get; private set; }
+    
 
-    private void Start()
+    [UsedImplicitly]
+    private void Awake()
     {
-        wheelCollider = GetComponent<WheelCollider>();
         tr = GetComponentInChildren<TrailRenderer>();
+
+        WheelGroundChecker = new CarWheelGroundChecker(transform, offset, radius, rideable);
+        WheelEffects = new CarWheelFX(tr, steeringForceTrailTreshold);
+        WheelSteeringHandler = new CarWheelSteeringHandler(transform, shouldRotate, WheelEffects, WheelGroundChecker);
     }
 
+    [UsedImplicitly]
     private void Update()
     {
-        isOnGround = Physics.CheckSphere(transform.position + transform.up * offset, radius, rideable);
-        tr.emitting = steeringForce >= steeringForceTrailTreshold && isOnGround;
+        WheelGroundChecker.Update();
+        WheelSteeringHandler.Update();
     }
 
-    public bool IsOnGround()
-    {
-        return isOnGround;
-    }
-
-    public void SetSteeringForce(float steeringForce)
-    {
-        this.steeringForce = Mathf.Abs(steeringForce);
-    }
-
+    [UsedImplicitly]
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + transform.up * offset, radius);
+        Gizmos.DrawWireSphere(transform.position - transform.up * offset, radius);
     }
 }
