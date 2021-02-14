@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class CarWheel : MonoBehaviour
 {
-    [SerializeField] float offset = 0f;
+    [SerializeField] Transform pointOfContact = null;
     [SerializeField] float radius = 0f;
     [SerializeField] float steeringForceTrailTreshold = 0.5f;
     [SerializeField] LayerMask rideable = 0;
     [SerializeField] bool shouldRotate = false;
-
-    private TrailRenderer tr = null;
 
     public CarWheelGroundChecker WheelGroundChecker { get; private set; }
     public CarWheelSteeringHandler WheelSteeringHandler{ get; private set; }
@@ -19,10 +17,11 @@ public class CarWheel : MonoBehaviour
     [UsedImplicitly]
     private void Awake()
     {
-        tr = GetComponentInChildren<TrailRenderer>();
+        var tr = GetComponentInChildren<TrailRenderer>();
+        var ps = GetComponentInChildren<ParticleSystem>();
 
-        WheelGroundChecker = new CarWheelGroundChecker(transform, offset, radius, rideable);
-        WheelEffects = new CarWheelFX(tr, steeringForceTrailTreshold);
+        WheelGroundChecker = new CarWheelGroundChecker(transform, pointOfContact, radius, rideable);
+        WheelEffects = new CarWheelFX(tr, ps, steeringForceTrailTreshold);
         WheelSteeringHandler = new CarWheelSteeringHandler(transform, shouldRotate, WheelEffects, WheelGroundChecker);
     }
 
@@ -36,7 +35,10 @@ public class CarWheel : MonoBehaviour
     [UsedImplicitly]
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position - transform.up * offset, radius);
+        if (pointOfContact != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(pointOfContact.position, radius);
+        }
     }
 }

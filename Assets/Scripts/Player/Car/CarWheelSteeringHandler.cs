@@ -10,10 +10,10 @@ public class CarWheelSteeringHandler
     private float _steeringRawValue = 0f;
     private float _steeringValue = 0f;
     private bool _isDrifting = false;
-    private bool _shouldRotate = false;
-    private Transform _transform = null;
-    private CarWheelFX _fx = null;
-    private CarWheelGroundChecker _groundChecker = null;
+    private readonly bool _shouldRotate = false;
+    private readonly Transform _transform = null;
+    private readonly CarWheelFX _fx = null;
+    private readonly CarWheelGroundChecker _groundChecker = null;
     public CarWheelSteeringHandler(Transform transform, bool shouldRotate, CarWheelFX fx, CarWheelGroundChecker groundChecker)
     {
         _transform = transform;
@@ -33,7 +33,6 @@ public class CarWheelSteeringHandler
         _transform.localRotation = Quaternion.Slerp(_transform.localRotation, 
             Quaternion.Euler(new Vector3(0f, -_steeringRawValue * 45f, 0f)), 
             Time.deltaTime * 5f);
-        //_transform.Rotate(_transform.up, _steeringRawValue * 30f);
     }
 
     /// <summary>
@@ -47,6 +46,7 @@ public class CarWheelSteeringHandler
         _steeringRawValue = rawValue;
         _steeringValue = processedValue;
         _isDrifting = isDrifting;
+        // TO-DO: Check if there are differences
         if (_groundChecker.OnGround && _isDrifting)
         {
             _fx.ShowDriftFX(_steeringValue);

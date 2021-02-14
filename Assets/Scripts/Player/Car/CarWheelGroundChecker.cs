@@ -10,14 +10,14 @@ public class CarWheelGroundChecker
     public bool OnGround { get; private set; } = false;
 
     private readonly Transform _transform;
-    private readonly float _wheelRadius;
+    private readonly Transform _pointOfContact;
     private readonly float _collisionRadius;
     private readonly LayerMask _rideableMask;
 
-    public CarWheelGroundChecker(Transform transform, float wheelRadius, float collisionRadius, LayerMask rideableMask)
+    public CarWheelGroundChecker(Transform transform, Transform pointOfContact, float collisionRadius, LayerMask rideableMask)
     {
         _transform = transform;
-        _wheelRadius = wheelRadius;
+        _pointOfContact = pointOfContact;
         _collisionRadius = collisionRadius;
         _rideableMask = rideableMask;
     }
@@ -29,7 +29,6 @@ public class CarWheelGroundChecker
 
     private void CheckOnGround()
     {
-        var wheelBorder = _transform.position - _transform.up * _wheelRadius;
-        OnGround = Physics.CheckSphere(wheelBorder, _collisionRadius, _rideableMask);
+        OnGround = Physics.CheckSphere(_pointOfContact.position, _collisionRadius, _rideableMask);
     }
 }
