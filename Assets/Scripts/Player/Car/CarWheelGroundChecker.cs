@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Takes care of checking if the wheel is on rideable ground
+/// Checks if the wheel is touching rideable ground
 /// </summary>
 public class CarWheelGroundChecker
 {
